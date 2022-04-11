@@ -48,10 +48,10 @@ public class TeacherMainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(Html.fromHtml("<font color='#FF0000'>"+"Odhlásenie sa !"+"</font>"))
-                .setMessage("Chcete sa naozaj odhlásiť ?")
-                .setPositiveButton(Html.fromHtml("<font color='#228B22'>"+"Áno"+"</font>"),(dialogInterface, i) ->  super.onBackPressed())
-                .setNegativeButton(Html.fromHtml("<font color='#228B22'>"+"Nie"+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
+                .setTitle(Html.fromHtml("<font color='#FF0000'>"+getString(R.string.login_dialog5)+"</font>"))
+                .setMessage(getString(R.string.login_dialog6))
+                .setPositiveButton(Html.fromHtml("<font color='#228B22'>"+getString(R.string.login_dialog7)+"</font>"),(dialogInterface, i) ->  super.onBackPressed())
+                .setNegativeButton(Html.fromHtml("<font color='#228B22'>"+getString(R.string.login_dialog8)+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
                 .create();
         dialog.show();
     }

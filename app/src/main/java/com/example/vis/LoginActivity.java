@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.widget.Button;
 import android.widget.EditText;
 
 
@@ -45,18 +44,18 @@ public class LoginActivity extends AppCompatActivity {
         }
         else if (username.getText().toString().equals("") || password.getText().toString().equals("")){
             AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setTitle(Html.fromHtml("<font color='#FF0000'>"+"Nesprávne prihlásenie !"+"</font>"))
-                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+"Musíte vyplniť všetky polia !"+"</font>"))
-                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+"Skúste to znova."+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
+                    .setTitle(Html.fromHtml("<font color='#FF0000'>"+getString(R.string.login_dialog1)+"</font>"))
+                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog2)+"</font>"))
+                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog3)+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
                     .create();
             dialog.show();
         }
 
         else{
             AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setTitle(Html.fromHtml("<font color='#FF0000'>"+"Nesprávne prihlásenie !"+"</font>"))
-                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+"Zadali ste nesprávne meno alebo heslo !"+"</font>"))
-                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+"Skúste to znova."+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
+                    .setTitle(Html.fromHtml("<font color='#FF0000'>"+getString(R.string.login_dialog1)+"</font>"))
+                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog4)+"</font>"))
+                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog3)+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
                     .create();
             dialog.show();
         }

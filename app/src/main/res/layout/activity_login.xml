@@ -18,7 +18,7 @@
         android:drawableStart="@drawable/custom_user_icon"
         android:elevation="20dp"
         android:ems="10"
-        android:hint="VIS Meno"
+        android:hint="@string/name_login"
         android:inputType="textPersonName"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
@@ -38,7 +38,7 @@
         android:drawableStart="@drawable/custom_lock_icon"
         android:elevation="20dp"
         android:ems="10"
-        android:hint="VIS Heslo"
+        android:hint="@string/password_login"
         android:textColorHint="@android:color/darker_gray"
         android:inputType="textPassword"
         android:paddingStart="12dp"
@@ -55,7 +55,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/custom_button"
         android:elevation="20dp"
-        android:text="Prihlásiť sa"
+        android:text="@string/button_login"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,11 +75,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Nemáte ešte študenský účet ?"
+        android:text="@string/button_registration"
         android:layout_marginBottom="10dp"
         android:elevation="20dp"
         android:textColor="@android:color/black"

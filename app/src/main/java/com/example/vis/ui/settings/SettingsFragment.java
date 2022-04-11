@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -33,6 +34,8 @@ import java.util.Locale;
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
+    private EditText oldpassword;
+    private EditText newpassword;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -45,21 +48,18 @@ public class SettingsFragment extends Fragment {
             lang.updateResource("sk");
             getActivity().recreate();
 
-
         });
         binding.buttonENG.setOnClickListener(View -> {
             lang.updateResource("en");
             getActivity().recreate();
         });
 
+        binding.buttonChangePassword.setOnClickListener(View ->{
 
+        });
 
-
-        binding.logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-            }
+        binding.logOut.setOnClickListener(View -> {
+            startActivity(new Intent(getActivity(), LoginActivity.class));
         });
 
         return root;
