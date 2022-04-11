@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Vis</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_teacher_main">TeacherMainActivity</string>
+    <string name="language_title">Application language</string>
+    <string name="logout_button">Log Out</string>
+    <string name="changep_button">Change password</string>
+    <string name="changep_text">Change password</string>
+    <string name="sk_button">Slovak</string>
+    <string name="en_button">English</string>
+    <string name="old_text">VIS Old Password</string>
+    <string name="new_text">VIS New Password</string>
+    <string name="home_header">Home</string>
+    <string name="student_header">Student</string>
+    <string name="teacher_header">Teacher</string>
+    <string name="classroom_header">Classroom</string>
+    <string name="message_header">Messages</string>
+    <string name="call_header">Call</string>
+    <string name="settings_header">Settings</string>
+</resources>

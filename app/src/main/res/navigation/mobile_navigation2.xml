@@ -2,20 +2,15 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@+id/nav_teacher">
+
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.vis.ui.home.HomeFragment"
-        android:label="@string/home_header"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_student"
-        android:name="com.example.vis.ui.student.StudentFragment"
-        android:label="@string/student_header"
-        tools:layout="@layout/fragment_student" />
+        android:id="@+id/nav_teacher"
+        android:name="com.example.vis.ui.teacher.TeacherFragment"
+        android:label="@string/teacher_header"
+        tools:layout="@layout/fragment_teacher" />
 
     <fragment
         android:id="@+id/nav_message"
@@ -24,10 +19,10 @@
         tools:layout="@layout/fragment_message" />
 
     <fragment
-        android:id="@+id/nav_materials"
-        android:name="com.example.vis.ui.classroom.ClassRoomFragment"
+        android:id="@+id/nav_teacher_classroom"
+        android:name="com.example.vis.ui.classroomTeacher.ClassRoomTeacherFragment"
         android:label="@string/classroom_header"
-        tools:layout="@layout/fragment_classroom" />
+        tools:layout="@layout/fragment_teacherclassroom" />
 
     <fragment
         android:id="@+id/nav_call"
@@ -40,5 +35,4 @@
         android:name="com.example.vis.ui.settings.SettingsFragment"
         android:label="@string/settings_header"
         tools:layout="@layout/fragment_settings" />
-
-   </navigation>
+</navigation>

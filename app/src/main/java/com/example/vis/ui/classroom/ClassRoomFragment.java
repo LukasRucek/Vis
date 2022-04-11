@@ -1,4 +1,4 @@
-package com.example.vis.ui.home;
+package com.example.vis.ui.classroom;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
-import com.example.vis.databinding.FragmentHomeBinding;
+import com.example.vis.databinding.FragmentClassroomBinding;
 
-public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+public class ClassRoomFragment extends Fragment {
+
+    private FragmentClassroomBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        binding = FragmentClassroomBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;
     }
-
-
 
     @Override
     public void onDestroyView() {

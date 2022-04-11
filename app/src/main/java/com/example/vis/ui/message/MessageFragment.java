@@ -19,7 +19,6 @@ public class MessageFragment extends Fragment {
         binding = FragmentMessageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.textSlideshow.setText("Shit");
 
         return root;
     }

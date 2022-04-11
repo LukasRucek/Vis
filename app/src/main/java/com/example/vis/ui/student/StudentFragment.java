@@ -20,7 +20,7 @@ public class StudentFragment extends Fragment {
         binding = FragmentStudentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.textGallery.setText("Ahoj Adam");
+
 
         return root;
     }
