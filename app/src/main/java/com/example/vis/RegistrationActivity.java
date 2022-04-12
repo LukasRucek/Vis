@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;

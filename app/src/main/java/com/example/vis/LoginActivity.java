@@ -12,17 +12,20 @@ import android.widget.EditText;
 import com.example.vis.databinding.ActivityLoginBinding;
 
 
-
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private EditText username;
     private EditText password;
+    private String lang;
+    private LanguageManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        manager = new LanguageManager(this);
+        manager.updateResource();
+        lang = manager.getLanguage();
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.register.setOnClickListener(register ->{
@@ -60,5 +63,14 @@ public class LoginActivity extends AppCompatActivity {
             dialog.show();
         }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        if (!lang.equals(manager.getLanguage())) {
+            finish();
+            startActivity(getIntent());
+        }
+        super.onResume();
     }
 }
