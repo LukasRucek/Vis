@@ -61,4 +61,5 @@
     <string name="login_dialog21">The phone number must have 10 digits !</string>
     <string name="login_dialog22">Cancellation of registration !</string>
     <string name="login_dialog23">Are you sure you want to cancel your registration ?</string>
+    <string name="login_dialog24">ID school must contain exectly 6 numbers !</string>
 </resources>

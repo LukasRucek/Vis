@@ -60,6 +60,7 @@
     <string name="login_dialog21">Telefóne číslo musí mať 10 číslic !</string>
     <string name="login_dialog22">Prerušenie registrácie !</string>
     <string name="login_dialog23">Vážne chcete prerušiť registráciu ?</string>
+    <string name="login_dialog24">ID školy musí obsahovať presne 6 čísel !</string>
     <string name="SHARED_PREFERENCES_KEY" translatable="false">VIS_PREFERENCES_KEY</string>
     <string name="SHARED_PREFERENCES_LANGUAGE_KEY" translatable="false">VIS_LANGUAGE_PREFERENCE</string>
 </resources>

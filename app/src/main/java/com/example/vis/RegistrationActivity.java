@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
 
@@ -19,6 +20,12 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class RegistrationActivity extends AppCompatActivity {
     private ActivityRegistrationBinding binding;
@@ -57,29 +64,38 @@ public class RegistrationActivity extends AppCompatActivity {
     public class Connection extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... arg0){
+            OkHttpClient client = new OkHttpClient();
+            String type_user;
+
+            String idschool = binding.schoolId.getText().toString().substring(0, 3);;
+            if(idschool.equals("100")){
+                type_user = "teacher";
+            }
+            else{
+                type_user = "student";
+            }
+
+            RequestBody formBody = new FormBody.Builder()
+                    .add("user_name", binding.username.getText().toString())
+                    .add("type", type_user)
+                    .add("first_name", binding.firstname.getText().toString())
+                    .add("last_name", binding.lastname.getText().toString())
+                    .add("password", binding.password.getText().toString())
+                    .add("email", binding.email.getText().toString())
+                    .add("id_school", binding.schoolId.getText().toString())
+                    .add("phone", binding.phone.getText().toString())
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url("http://192.168.137.1:8000/vis/register")
+                    .post(formBody)
+                    .build();
+
             try {
-                HttpsURLConnection connection = (HttpsURLConnection) new URL("https://192.168.42.72:8000/vis/register").openConnection();
-                connection.setRequestMethod("POST");
-                String postData = "user_name:" + URLEncoder.encode(binding.username.getText().toString());
-                postData += "&first_name:" + URLEncoder.encode(binding.firstname.getText().toString());
-                postData += "&last_name" + URLEncoder.encode(binding.lastname.getText().toString());
-                postData += "&type:" + URLEncoder.encode("student");
-                postData += "&password:" + URLEncoder.encode(binding.password.getText().toString());
-
-                connection.setDoOutput(true);
-                OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
-                wr.write(postData);
-                wr.flush();
-
-                int responseCode = connection.getResponseCode();
-                if(responseCode == 200){
-                    System.out.println("POST was successful.");
-                }
-                else {
-                    System.out.println("Wrong password.");
-                }
+                Response response = client.newCall(request).execute();
+                Log.d("HTTPCALL", Integer.toString(response.code()));
+                // Do something with the response.
             } catch (IOException e) {
-                System.out.println("Ahoj.");
                 e.printStackTrace();
             }
             return null;
@@ -146,10 +162,11 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
 
-        if (isEmpty(binding.schoolId)) {
+        if (isEmpty(binding.schoolId) || binding.schoolId.getText().toString().length() != 6) {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle(Html.fromHtml("<font color='#FF0000'>"+getString(R.string.login_dialog12)+"</font>"))
                     .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog20)+"</font>"))
+                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog24)+"</font>"))
                     .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog13)+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
                     .create();
             dialog.show();
