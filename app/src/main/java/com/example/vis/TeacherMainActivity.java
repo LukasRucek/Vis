@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -17,6 +18,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.vis.databinding.ActivityTeacherMainBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class TeacherMainActivity extends AppCompatActivity {
 
@@ -66,6 +70,22 @@ public class TeacherMainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_teacher_main);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("key");
+            JSONObject user;
+            try {
+                user = new JSONObject(value);
+                TextView tvHeaderName = (TextView) findViewById(R.id.nav_name);
+                if(tvHeaderName != null){
+                    tvHeaderName.setText(user.getString("first_name") + " " + user.getString("last_name"));
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }

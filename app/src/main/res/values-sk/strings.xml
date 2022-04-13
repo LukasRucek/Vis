@@ -73,4 +73,12 @@
     <string name="login_dialog33">Čas odoslania: </string>
     <string name="login_dialog34">Nemáte žiadné súbory !</string>
     <string name="login_dialog35">Názov súboru: </string>
+    <string name="login_dialog36">Informácie o študentovi </string>
+    <string name="login_dialog37">Meno študenta: </string>
+    <string name="login_dialog38">Vis meno: </string>
+    <string name="login_dialog39">Email adresa: </string>
+    <string name="login_dialog40">ID školy: </string>
+    <string name="login_dialog41">Telefónne číslo: </string>
+    <string name="login_dialog42">Informácie o účiteľovi: </string>
+    <string name="login_dialog43">Meno učiteľa: </string>
 </resources>

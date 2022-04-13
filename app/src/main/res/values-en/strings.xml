@@ -73,4 +73,12 @@
     <string name="login_dialog33">Sending time: </string>
     <string name="login_dialog34">You have no files !</string>
     <string name="login_dialog35">File name: </string>
+    <string name="login_dialog36">Information about student</string>
+    <string name="login_dialog37">Name student: </string>
+    <string name="login_dialog38">Vis Name: </string>
+    <string name="login_dialog39">Email adress: </string>
+    <string name="login_dialog40">School ID: </string>
+    <string name="login_dialog41">Telephone number: </string>
+    <string name="login_dialog42">Information about teacher: </string>
+    <string name="login_dialog43">Name teacher: </string>
 </resources>

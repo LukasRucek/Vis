@@ -9,7 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
+import com.example.vis.R;
 import com.example.vis.databinding.FragmentTeacherBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class TeacherFragment extends Fragment {
 
@@ -21,7 +25,20 @@ public class TeacherFragment extends Fragment {
         binding = FragmentTeacherBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("key");
+            JSONObject user;
+            try {
+                user = new JSONObject(value);
+                binding.teacherInfo.setText(getString(R.string.login_dialog43)+"\n    "+ user.getString("first_name")
+                        + " " + user.getString("last_name") + "\n\n"+getString(R.string.login_dialog38)+"\n    "+ user.getString("user_name")
+                        + "\n\n"+getString(R.string.login_dialog39)+"\n    "+ user.getString("email") + "\n\n"+getString(R.string.login_dialog40)+"\n    " + user.getString("school_id")+
+                        "\n\n"+getString(R.string.login_dialog41)+"\n    "+user.getString("phone"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         return root;
     }
