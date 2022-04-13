@@ -2,10 +2,10 @@ package com.example.vis;
 
 import android.os.Bundle;
 import android.text.Html;
-import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.vis.ui.message.MessageFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.app.AlertDialog;

@@ -80,6 +80,10 @@
     <string name="login_dialog41">Telefónne číslo: </string>
     <string name="login_dialog42">Informácie o účiteľovi: </string>
     <string name="login_dialog43">Meno učiteľa: </string>
+    <string name="login_dialog44">Nesprávna zmena hesla !</string>
+    <string name="login_dialog45">Staré a nové heslo sa nesmú zhodovať !</string>
+    <string name="login_dialog46">Úspešne sa vám podarilo zmeniť heslo !</string>
+    <string name="login_dialog47">Nepodarilo sa vám zmeniť heslo !</string>
     <string name="SHARED_PREFERENCES_KEY" translatable="false">VIS_PREFERENCES_KEY</string>
     <string name="SHARED_PREFERENCES_LANGUAGE_KEY" translatable="false">VIS_LANGUAGE_PREFERENCE</string>
 </resources>

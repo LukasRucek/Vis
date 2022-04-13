@@ -81,4 +81,8 @@
     <string name="login_dialog41">Telephone number: </string>
     <string name="login_dialog42">Information about teacher: </string>
     <string name="login_dialog43">Name teacher: </string>
+    <string name="login_dialog44">Incorrect password change !</string>
+    <string name="login_dialog45">Old and new passwords must not match !</string>
+    <string name="login_dialog46">You have successfully changed your password !</string>
+    <string name="login_dialog47">You were unable to change your password !</string>
 </resources>
