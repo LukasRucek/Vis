@@ -7,27 +7,23 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.EditText;
 
 
 import com.example.vis.databinding.ActivityRegistrationBinding;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Locale;
 import java.util.regex.Pattern;
-
-import javax.net.ssl.HttpsURLConnection;
-
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity implements OnFinishListener {
+
     private ActivityRegistrationBinding binding;
     public final Pattern textPattern = Pattern.compile("^(?=.*[A-Z]).+$");
 
@@ -39,6 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
         binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         LanguageManager lang = new LanguageManager(this);
+        binding.progressBar1.setVisibility(View.GONE);
         binding.buttonSVK.setOnClickListener(View -> {
             lang.updateResource("sk");
             recreate();
@@ -50,18 +47,48 @@ public class RegistrationActivity extends AppCompatActivity {
         });
         binding.registration.setOnClickListener(register ->{
             if (checkDataEntered()){
-                new Connection().execute();
-                AlertDialog dialog = new AlertDialog.Builder(this)
-                        .setTitle(Html.fromHtml("<font color='#228B22'>"+getString(R.string.login_dialog9)+"</font>"))
-                        .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog10)+"</font>"))
-                        .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog11)+"</font>"),(dialogInterface, i) ->  super.onBackPressed() )
-                        .create();
-                dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
+                binding.progressBar1.setVisibility(View.VISIBLE);
+                new Connection(this).execute();
             }
         });
     }
+
+    @Override
+    public void onSuccess() {
+        runOnUiThread(() -> {
+            binding.progressBar1.setVisibility(View.GONE);
+            AlertDialog dialog = new AlertDialog.Builder(RegistrationActivity.this)
+                    .setTitle(Html.fromHtml("<font color='#228B22'>"+getString(R.string.login_dialog9)+"</font>"))
+                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog10)+"</font>"))
+                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog11)+"</font>"),(dialogInterface, i) ->  super.onBackPressed() )
+                    .create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        });
+    }
+
+    @Override
+    public void onFailed() {
+        runOnUiThread(() -> {
+            binding.progressBar1.setVisibility(View.GONE);
+            AlertDialog dialog = new AlertDialog.Builder(RegistrationActivity.this)
+                    .setTitle(Html.fromHtml("<font color='#FF0000'>"+getString(R.string.login_dialog12)+"</font>"))
+                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog25)+"</font>"))
+                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog13)+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss() )
+                    .create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+        });
+    }
+
     public class Connection extends AsyncTask<Void, Void, Void>{
+
+        private OnFinishListener listener;
+
+        public Connection(OnFinishListener listener) {
+            this.listener = listener;
+        }
+
         @Override
         protected Void doInBackground(Void... arg0){
             OkHttpClient client = new OkHttpClient();
@@ -74,13 +101,14 @@ public class RegistrationActivity extends AppCompatActivity {
             else{
                 type_user = "student";
             }
-
+            final String passHash = BCrypt.withDefaults().hashToString(12, binding.password.getText().toString().toCharArray());
+            Log.d("register", "$passHash");
             RequestBody formBody = new FormBody.Builder()
                     .add("user_name", binding.username.getText().toString())
                     .add("type", type_user)
                     .add("first_name", binding.firstname.getText().toString())
                     .add("last_name", binding.lastname.getText().toString())
-                    .add("password", binding.password.getText().toString())
+                    .add("password", passHash)
                     .add("email", binding.email.getText().toString())
                     .add("id_school", binding.schoolId.getText().toString())
                     .add("phone", binding.phone.getText().toString())
@@ -94,13 +122,20 @@ public class RegistrationActivity extends AppCompatActivity {
             try {
                 Response response = client.newCall(request).execute();
                 Log.d("HTTPCALL", Integer.toString(response.code()));
-                // Do something with the response.
+                if (Integer.toString(response.code()).equals("200")){
+                    listener.onSuccess();
+                }
+                else if (Integer.toString(response.code()).equals("401")){
+                    listener.onFailed();
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
         }
     }
+
     boolean isEmpty(EditText field) {
         if (field.getText().toString().equals("")){
             return true;

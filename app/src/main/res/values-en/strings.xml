@@ -62,4 +62,5 @@
     <string name="login_dialog22">Cancellation of registration !</string>
     <string name="login_dialog23">Are you sure you want to cancel your registration ?</string>
     <string name="login_dialog24">ID school must contain exectly 6 numbers !</string>
+    <string name="login_dialog25">User already exists !</string>
 </resources>
