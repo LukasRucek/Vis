@@ -10,9 +10,13 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.example.vis.databinding.ActivityLoginBinding;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -62,21 +66,6 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
                  new Connection(this).execute();
             }
 
-
-
-        if (username.getText().toString().isEmpty() && password.getText().toString().equals("peter")){
-            binding.progressBar.setVisibility(View.VISIBLE);
-            new Connection(this).execute();
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-
-        }
-        else if (username.getText().toString().equals("i") && password.getText().toString().equals("i")){
-            Intent intent = new Intent(this, TeacherMainActivity.class);
-            startActivity(intent);
-
-        }
-
         });
     }
 
@@ -91,23 +80,57 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
             OkHttpClient client = new OkHttpClient();
             String username = binding.nameField.getText().toString();
             String password = binding.passField.getText().toString();
+
             Request request = new Request.Builder()
-                    .url("http://192.168.137.1:8000/vis/login/"+username+"/"+password)
+                    .url("http://192.168.137.1:8000/vis/login1/")
+                    .header("Username", username)
                     .build();
 
             try {
                 Response response = client.newCall(request).execute();
                 Log.d("HTTPCALL", Integer.toString(response.code()));
                 if (Integer.toString(response.code()).equals("200")){
-                    System.out.println(response.body());
-                    listener.onSuccess_login();
+                    final String passHashs = response.body().string();
+                    JSONObject pass = new JSONObject(passHashs);
+                    String pass2 = pass.getString("password");
+                    final BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(),pass2);
+                    if(result.verified){
+                        listener.onSuccess_login();
+                        Request request2 = new Request.Builder()
+                                .url("http://192.168.137.1:8000/vis/login/")
+                                .header("Username", username)
+                                .build();
+                        try{
+                            Response response2 = client.newCall(request2).execute();
+                            Log.d("HTTPCALL", Integer.toString(response2.code()));
+                            final String user_info = response2.body().string();
+                            JSONObject user = new JSONObject(user_info);
+                            String user_type = user.getString("user_type_id");
+                            if(user_type.equals("1")){
+                                Intent intent = new Intent(LoginActivity.this, TeacherMainActivity.class);
+                                intent.putExtra("key",user_info);
+                                startActivity(intent);
+                            }
+                            else{
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("key",user_info);
+                                startActivity(intent);
+                            }
+
+                        }catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    else{
+                        listener.onFailed_login();
+                    }
                 }
-                else if (Integer.toString(response.code()).equals("401")){
-                    System.out.println(response.body());
-                    listener.onFailed_login();
+                else if (Integer.toString(response.code()).equals("403")){
+                    listener.onFailed_loginExists();
                 }
 
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return null;
@@ -117,13 +140,7 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
     public void onSuccess_login() {
         runOnUiThread(() -> {
             binding.progressBar.setVisibility(View.GONE);
-            AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setTitle(Html.fromHtml("<font color='#228B22'>"+getString(R.string.login_dialog9)+"</font>"))
-                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog10)+"</font>"))
-                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog11)+"</font>"),(dialogInterface, i) ->  super.onBackPressed() )
-                    .create();
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.show();
+            Toast.makeText(getApplicationContext(),getString(R.string.login_dialog27), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -134,6 +151,19 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle(Html.fromHtml("<font color='#FF0000'>"+getString(R.string.login_dialog1)+"</font>"))
                     .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog4)+"</font>"))
+                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog3)+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
+                    .create();
+            dialog.show();
+        });
+    }
+
+    @Override
+    public void onFailed_loginExists() {
+        runOnUiThread(() -> {
+            binding.progressBar.setVisibility(View.GONE);
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle(Html.fromHtml("<font color='#FF0000'>"+getString(R.string.login_dialog1)+"</font>"))
+                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog26)+"</font>"))
                     .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog3)+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
                     .create();
             dialog.show();

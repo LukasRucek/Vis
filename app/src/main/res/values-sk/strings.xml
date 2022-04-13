@@ -63,4 +63,14 @@
     <string name="login_dialog23">Vážne chcete prerušiť registráciu ?</string>
     <string name="login_dialog24">ID školy musí obsahovať presne 6 čísel !</string>
     <string name="login_dialog25">Používateľ už existuje !</string>
+    <string name="login_dialog26">Používateľ neexistuje !</string>
+    <string name="login_dialog27">Úspešne ste sa prihlásili !</string>
+    <string name="login_dialog28">Najnovšie správy</string>
+    <string name="login_dialog29">Najnovšie materialy</string>
+    <string name="login_dialog30">Nemáte žiadné správy !</string>
+    <string name="login_dialog31">Odosielateľ: </string>
+    <string name="login_dialog32">Názov správy: </string>
+    <string name="login_dialog33">Čas odoslania: </string>
+    <string name="login_dialog34">Nemáte žiadné súbory !</string>
+    <string name="login_dialog35">Názov súboru: </string>
 </resources>

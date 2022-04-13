@@ -63,4 +63,14 @@
     <string name="login_dialog23">Are you sure you want to cancel your registration ?</string>
     <string name="login_dialog24">ID school must contain exectly 6 numbers !</string>
     <string name="login_dialog25">User already exists !</string>
+    <string name="login_dialog26">User does not exist !</string>
+    <string name="login_dialog27">You have successfully log in !</string>
+    <string name="login_dialog28">The latest messages</string>
+    <string name="login_dialog29">The latest materials</string>
+    <string name="login_dialog30">You have no messages !</string>
+    <string name="login_dialog31">Sender: </string>
+    <string name="login_dialog32">Message name: </string>
+    <string name="login_dialog33">Sending time: </string>
+    <string name="login_dialog34">You have no files !</string>
+    <string name="login_dialog35">File name: </string>
 </resources>
