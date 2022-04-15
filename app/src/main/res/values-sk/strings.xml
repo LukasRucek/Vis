@@ -85,4 +85,26 @@
     <string name="login_dialog45">Staré a nové heslo sa nesmú zhodovať !</string>
     <string name="login_dialog46">Úspešne sa vám podarilo zmeniť heslo !</string>
     <string name="login_dialog47">Nepodarilo sa vám zmeniť heslo !</string>
+    <string name="login_dialog48">Nemáte žiadne správy !</string>
+    <string name="login_dialog49">Viac správ už nemáte !</string>
+    <string name="butt_prev">Predchadzajúce</string>
+    <string name="butt_next">Následujúce</string>
+    <string name="butt_new">Nová správa</string>
+    <string name="message_formular">Formulár správy</string>
+    <string name="message_name">Názov správy</string>
+    <string name="message_desc">Obsah správy</string>
+    <string name="message_send">Odoslanie správy</string>
+    <string name="back_butt">Späť</string>
+    <string name="login_dialog50">Úspešne ste odoslali správu !</string>
+    <string name="login_dialog51">Neúspešné odoslanie správy</string>
+    <string name="login_dialog52">Musíte vyplniť všetky polia !</string>
+    <string name="login_dialog53">Používateľ s takým menom neexistuje !</string>
+    <string name="login_dialog54">Chcete sa vrátiť späť ?</string>
+    <string name="adding_classroom">Vytvorenie triedy</string>
+    <string name="name_classroom">Meno triedy</string>
+    <string name="lecture_classroom">Názov predmetu</string>
+    <string name="button_classroom">Vytvoriť</string>
+    <string name="login_dialog55">Musíte vyplniť všetký polia !</string>
+    <string name="login_dialog56">Úspešne ste vytvorili novú triedu.</string>
+    <string name="login_dialog57">Nepodarilo sa vytvoriť triedu.</string>
 </resources>

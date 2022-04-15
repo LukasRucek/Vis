@@ -85,4 +85,26 @@
     <string name="login_dialog45">Old and new passwords must not match !</string>
     <string name="login_dialog46">You have successfully changed your password !</string>
     <string name="login_dialog47">You were unable to change your password !</string>
+    <string name="login_dialog48">You have no messages !</string>
+    <string name="login_dialog49">You no longer have more messages !</string>
+    <string name="butt_prev">Previous</string>
+    <string name="butt_next">Next</string>
+    <string name="butt_new">New message</string>
+    <string name="message_formular">Message form</string>
+    <string name="message_name">Message name</string>
+    <string name="message_desc">Content of the message</string>
+    <string name="message_send">Send the message</string>
+    <string name="back_butt">Back</string>
+    <string name="login_dialog50">You have successfully sent the message !</string>
+    <string name="login_dialog51">Failed to send message</string>
+    <string name="login_dialog52">You must fill in all of the fields !</string>
+    <string name="login_dialog53">A user with that name does not exist !</string>
+    <string name="login_dialog54">Do you want to go back ?</string>
+    <string name="adding_classroom">Create classroom</string>
+    <string name="name_classroom">Class name</string>
+    <string name="lecture_classroom">Subject name</string>
+    <string name="button_classroom">Create</string>
+    <string name="login_dialog55">You must fill in all of the fields !</string>
+    <string name="login_dialog56">You have successfully created a new classroom.</string>
+    <string name="login_dialog57">Failed to create classroom.</string>
 </resources>

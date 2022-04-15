@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/Vis/app/src/main/res/drawable-anydpi/addClassroom.xml" value="0.1905" />
+        <entry key="..\:/Android/Vis/app/src/main/res/drawable-anydpi/addclassroom.xml" value="0.1905" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable-anydpi/calls.xml" value="0.1735" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable-anydpi/email.xml" value="0.197" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable-anydpi/home.xml" value="0.1735" />
@@ -39,12 +41,15 @@
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/side_nav_bar.xml" value="0.259" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/styles.xml" value="0.197" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/user_focused.xml" value="0.122" />
+        <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_add_student.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_main.xml" value="0.24547101449275363" />
+        <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_message_sender.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_registration.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_teacher_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/app_bar_main.xml" value="0.264" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/app_bar_teacher_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android/Vis/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.1" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/content_main.xml" value="0.24547101449275363" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/content_teacher_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_call.xml" value="0.25416666666666665" />
@@ -53,7 +58,7 @@
         <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_gallery.xml" value="0.24444444444444444" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_material.xml" value="0.25416666666666665" />
-        <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_message.xml" value="0.2" />
+        <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_message.xml" value="0.264" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_slideshow.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_student.xml" value="0.25416666666666665" />
@@ -61,6 +66,8 @@
         <entry key="..\:/Android/Vis/app/src/main/res/layout/fragment_teacherclassroom.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/nav_header_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/nav_header_teacher_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android/Vis/app/src/main/res/layout/row.xml" value="0.264" />
+        <entry key="..\:/Android/Vis/app/src/main/res/layout/row2.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/menu/activity_main_drawer.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/menu/main.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/menu/teacher_main.xml" value="0.2" />

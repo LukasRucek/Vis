@@ -1,6 +1,6 @@
 package com.example.vis;
 
-interface OnFinishListener {
+public interface OnFinishListener {
     void onSuccess();
     void onFailed();
 }
