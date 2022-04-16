@@ -107,4 +107,13 @@
     <string name="login_dialog55">You must fill in all of the fields !</string>
     <string name="login_dialog56">You have successfully created a new classroom.</string>
     <string name="login_dialog57">Failed to create classroom.</string>
+    <string name="classroom_choice">Select a classroom</string>
+    <string name="add_student2">Add student</string>
+    <string name="login_dialog58">You have successfully added a student to the class !</string>
+    <string name="login_dialog59">Student does not exist or is already added in the class !</string>
+    <string name="name_student2">Name Student: </string>
+    <string name="classroom_option">Classroom options: </string>
+    <string name="login_dialog60">You have not created any classes !</string>
+    <string name="login_dialog61">Add student</string>
+    <string name="login_dialog62">Add material</string>
 </resources>

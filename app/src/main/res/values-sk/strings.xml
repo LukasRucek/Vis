@@ -107,4 +107,13 @@
     <string name="login_dialog55">Musíte vyplniť všetký polia !</string>
     <string name="login_dialog56">Úspešne ste vytvorili novú triedu.</string>
     <string name="login_dialog57">Nepodarilo sa vytvoriť triedu.</string>
+    <string name="login_dialog58">Úspešne ste pridali študenta do triedy !</string>
+    <string name="login_dialog59">Študent neexistuje alebo už je pridaný v danej triede !</string>
+    <string name="name_student2">Meno študenta: </string>
+    <string name="classroom_option">Možnosti tried: </string>
+    <string name="classroom_choice">Vyberte triedu: </string>
+    <string name="add_student2">Pridať študenta</string>
+    <string name="login_dialog60">Nemáte vytvorený žiadnu triedu !</string>
+    <string name="login_dialog61">Pridať študenta</string>
+    <string name="login_dialog62">Pridať material</string>
 </resources>

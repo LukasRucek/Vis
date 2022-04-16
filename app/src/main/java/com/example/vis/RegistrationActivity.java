@@ -45,6 +45,7 @@ public class RegistrationActivity extends AppCompatActivity implements OnFinishL
             lang.updateResource("en");
             recreate();
         });
+
         binding.registration.setOnClickListener(register ->{
             if (checkDataEntered()){
                 binding.progressBar1.setVisibility(View.VISIBLE);
