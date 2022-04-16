@@ -1,7 +1,10 @@
 package com.example.vis.ui.classroomTeacher;
 
 import android.animation.LayoutTransition;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,16 +40,17 @@ import com.example.vis.TeacherMaterials;
 import com.example.vis.databinding.FragmentTeacherclassroomBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import org.apache.commons.io.FileSystemUtils;
-import org.apache.commons.io.FileUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -80,7 +84,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     byte[] pdfInByte;
     JSONObject student_one_class = new JSONObject();
     String spinnerItem;
-    private int REQ_PDF = 200;
+    private int REQ_PDF = 21;
     private String encodedPDF;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -185,17 +189,10 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
             material.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(
-                            Intent.createChooser(intent,"Select file"),
-                            PICK_IMAGE_FROM_GALLERY_REQUEST
-                    );
-                    //Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-                    //chooseFile.setType("application/pdf");
-                    //chooseFile = Intent.createChooser(chooseFile, "Choose a file");
-                    //startActivityForResult(chooseFile, REQ_PDF);
+                    Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+                    chooseFile.setType("*/*");
+                    chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+                    startActivityForResult(chooseFile, REQ_PDF);
                 }
             });
 
@@ -210,12 +207,47 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     }
     InputStream inputStream;
     Uri path;
+
+    private File selectedFile;
+
+    private String getPath(Context context, Uri uri) throws URISyntaxException {
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = { "_data" };
+            Cursor cursor = null;
+
+            try {
+                cursor = context.getContentResolver().query(uri, projection, null, null, null);
+                int column_index = cursor.getColumnIndexOrThrow("_data");
+                if (cursor.moveToFirst()) {
+                    return cursor.getString(column_index);
+                }
+
+            } catch (Exception e) {
+
+            }
+        }
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_IMAGE_FROM_GALLERY_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
+        if(requestCode == REQ_PDF && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             path = data.getData();
+            try {
+                InputStream input = getActivity().getContentResolver().openInputStream(path);
+                byte[] pdfInbytes = new byte[input.available()];
+                input.read(pdfInbytes);
+                encodedPDF = Base64.encodeToString(pdfInbytes, Base64.DEFAULT);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -385,14 +417,17 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
         protected Void doInBackground(Void... help) {
             OkHttpClient client = new OkHttpClient();
                 try {
-                    RequestBody formBody = new FormBody.Builder()
-                            .add("file",encodedPDF )
-                            .add("classroom_name", spinnerItem)
-                            .add("name", name_material.getText().toString())
+
+                    RequestBody body = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
+                            .addFormDataPart("file", encodedPDF)
+                            .addFormDataPart("classroom_name", spinnerItem)
+                            .addFormDataPart("name",name_material.getText().toString())
                             .build();
+
                     Request request = new Request.Builder()
                             .url("http://192.168.137.1:8000/vis/materials/"+user.getString("id"))
-                            .post(formBody)
+                            .post(body)
                             .build();
 
                     Response response = client.newCall(request).execute();
