@@ -114,6 +114,18 @@
     <string name="name_student2">Name Student: </string>
     <string name="classroom_option">Classroom options: </string>
     <string name="login_dialog60">You have not created any classes !</string>
-    <string name="login_dialog61">Add student</string>
+    <string name="login_dialog61">Add/Remove student</string>
     <string name="login_dialog62">Add material</string>
+    <string name="type_option">File type: </string>
+    <string name="name_material">File name </string>
+    <string name="login_dialog63">Choose file</string>
+    <string name="login_dialog64">Unselected file</string>
+    <string name="login_dialog65">Selected file</string>
+    <string name="login_dialog66">You have successfully added material !</string>
+    <string name="login_dialog67">You have unsuccessfully added material !</string>
+    <string name="login_dialog68">Remove student</string>
+    <string name="login_dialog69">You have successfully removed the student</string>
+    <string name="login_dialog70">The student is not in classroom</string>
+    <string name="remove_student2">Remove student</string>
+    <string name="remove_material">Remove material</string>
 </resources>

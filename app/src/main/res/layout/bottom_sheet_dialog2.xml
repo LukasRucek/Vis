@@ -15,7 +15,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name_material"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/custom_button"
         android:fontFamily="sans-serif-black"
         android:text="@string/classroom_option"
@@ -25,12 +25,27 @@
         android:textSize="15sp"
         android:typeface="normal" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/classrooms"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/type_option"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_light"
+        android:textLocale="center"
+        android:textSize="15sp"
+        android:typeface="normal" />
+
+
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
         app:srcCompat="@drawable/logo2" />
 
     <EditText
@@ -40,9 +55,9 @@
         android:layout_below="@+id/textView6"
         android:layout_marginTop="2dp"
         android:background="@drawable/custom_input"
-        android:drawableStart="@drawable/custom_user_icon"
+        android:drawableStart="@drawable/materials"
         android:ems="10"
-        android:hint="@string/name_login"
+        android:hint="@string/name_material"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:textColor="@android:color/black"
@@ -59,28 +74,35 @@
         android:ems="10"
         android:spinnerMode="dropdown" />
 
+    <Spinner
+        android:id="@+id/type_material"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/textView8"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:spinnerMode="dropdown" />
+
     <ProgressBar
-        android:id="@+id/progressBar4"
+        android:id="@+id/progressBar5"
         style="?android:attr/progressBarStyle"
-        android:layout_width="241dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/chooseMaterial"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="50dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="140dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/uploadMaterial"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progressBar4"
-        android:layout_alignParentStart="true"
+        android:layout_below="@+id/progressBar5"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="122dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="98dp"
         android:background="@drawable/custom_button"
-        android:text="@string/add_student2"
+        android:text="@string/login_dialog62"
         android:textColor="@color/black" />
 
     <TextView
@@ -88,10 +110,10 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView6"
-        android:layout_marginTop="19dp"
+
         android:background="@drawable/custom_button"
         android:fontFamily="sans-serif-black"
-        android:text="@string/name_student2"
+        android:text="@string/name_material"
         android:textAlignment="center"
         android:textColor="@android:color/holo_red_light"
         android:textLocale="center"
@@ -100,25 +122,41 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/chooseMaterial_button"
-        android:layout_width="134dp"
-        android:layout_height="46dp"
-        android:layout_below="@+id/classrooms"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/type_material"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="2dp"
-        android:layout_toEndOf="@+id/chooseMaterial"
-        android:text="Button" />
+        android:background="@drawable/custom_button"
+        android:elevation="20dp"
+        android:text="@string/login_dialog63"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/chooseMaterial"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/classrooms"
+        android:layout_below="@+id/type_material"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="51dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="sans-serif-black"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_red_light"
+        android:textLocale="center"
+        android:textSize="15sp"
+        android:typeface="normal" />
+
+    <CheckBox
+        android:id="@+id/add_remove_material"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBar5"
         android:layout_marginTop="20dp"
-        android:text="TextView" />
+        android:layout_marginRight="20dp"
+        android:layout_toStartOf="@+id/uploadMaterial"
+        android:background="@drawable/custom_button"
+        android:text="@string/remove_material"
+        android:textColor="@color/black" />
 
 
 </RelativeLayout>

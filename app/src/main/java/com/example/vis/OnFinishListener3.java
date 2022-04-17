@@ -9,4 +9,6 @@ public interface OnFinishListener3 {
     void onFailed2();
     void onSuccess3();
     void onFailed3();
+    void onSuccess4();
+    void onFailed4();
 }

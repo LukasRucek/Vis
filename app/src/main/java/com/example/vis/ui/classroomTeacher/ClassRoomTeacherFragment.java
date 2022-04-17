@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -52,8 +53,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -72,20 +77,36 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     TeacherAdapter adapter;
     LinearLayout layout;
     private ArrayAdapter help_adapter;
+    private ArrayAdapter help_adapter2;
     ProgressBar progresBar4;
+    ProgressBar progresBar5;
     BottomSheetDialog bottomSheetDialog;
     BottomSheetDialog bottomSheetDialog2;
+    CheckBox add_removeStudent;
     JSONArray array;
     JSONObject user;
     EditText namestudent;
-    private int PICK_IMAGE_FROM_GALLERY_REQUEST = 1;
-    File ahoj;
     EditText name_material;
-    byte[] pdfInByte;
     JSONObject student_one_class = new JSONObject();
     String spinnerItem;
+    String spinnerItem2;
+    Intent chooseFile;
     private int REQ_PDF = 21;
     private String encodedPDF;
+    Button submit;
+
+    String[] allow_types = { "pdf", "txt","png", "jpeg"};
+    Map<String, String> combination = new HashMap<String, String>()
+    {
+        {
+            put("pdf", "application/pdf");
+            put("txt", "text/plain");
+            put("jpeg", "image/jpeg");
+            put("png", "image/png");
+        }
+    };
+
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -132,21 +153,35 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
                     e.printStackTrace();
                 }
             }
+
             bottomSheetDialog = new BottomSheetDialog(getActivity());
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
-            ProgressBar progress =bottomSheetDialog.findViewById(R.id.progressBar4);
-            Button submit = bottomSheetDialog.findViewById(R.id.submit);
-            progress.setVisibility(View.GONE);
-            Spinner help =bottomSheetDialog.findViewById(R.id.classrooms);
+            submit = bottomSheetDialog.findViewById(R.id.submit);
             namestudent = bottomSheetDialog.findViewById(R.id.student_name);
+            add_removeStudent = bottomSheetDialog.findViewById(R.id.add_delete);
+            Spinner help =bottomSheetDialog.findViewById(R.id.classrooms);
             help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list);
             help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
             progresBar4 = bottomSheetDialog.findViewById(R.id.progressBar4);
             progresBar4.setVisibility(View.GONE);
             help.setAdapter(help_adapter);
             help.setOnItemSelectedListener(this);
             bottomSheetDialog.setCanceledOnTouchOutside(false);
             bottomSheetDialog.show();
+            add_removeStudent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (add_removeStudent.isChecked()){
+                        submit.setText(getString(R.string.remove_student2));
+                    }
+                    else{
+                        submit.setText(getString(R.string.add_student2));
+                    }
+                }
+            });
+
             submit.setOnClickListener(addStudent1->{
                 if (namestudent.getText().toString().isEmpty()){
                     Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
@@ -170,68 +205,92 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
             }
             bottomSheetDialog2 = new BottomSheetDialog(getActivity());
             bottomSheetDialog2.setContentView(R.layout.bottom_sheet_dialog2);
-            ProgressBar progress =bottomSheetDialog2.findViewById(R.id.progressBar4);
             Button uploadMaterial = bottomSheetDialog2.findViewById(R.id.uploadMaterial);
-            progress.setVisibility(View.GONE);
             Spinner help =bottomSheetDialog2.findViewById(R.id.classrooms);
             name_material = bottomSheetDialog2.findViewById(R.id.name_material);
             help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list2);
             help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            progresBar4 = bottomSheetDialog2.findViewById(R.id.progressBar4);
-            progresBar4.setVisibility(View.GONE);
+
+            Spinner help2 =bottomSheetDialog2.findViewById(R.id.type_material);
+            help_adapter2 = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, allow_types);
+            help_adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            help2.setAdapter(help_adapter2);
+            help2.setOnItemSelectedListener(this);
+
+            progresBar5 = bottomSheetDialog2.findViewById(R.id.progressBar5);
+            progresBar5.setVisibility(View.GONE);
             help.setAdapter(help_adapter);
             help.setOnItemSelectedListener(this);
             bottomSheetDialog2.setCanceledOnTouchOutside(false);
             bottomSheetDialog2.show();
             Button material = bottomSheetDialog2.findViewById(R.id.chooseMaterial_button);
             TextView materialView = bottomSheetDialog2.findViewById(R.id.chooseMaterial);
+            TextView chooseMaterial = bottomSheetDialog2.findViewById(R.id.chooseMaterial);
+            CheckBox remove_material = bottomSheetDialog2.findViewById(R.id.add_remove_material);
+            chooseMaterial.setText(getString(R.string.login_dialog64));
+            TextView textview1 = bottomSheetDialog2.findViewById(R.id.textView8);
+            TextView textview2 = bottomSheetDialog2.findViewById(R.id.textView7);
+
+            remove_material.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (remove_material.isChecked()){
+                        uploadMaterial.setText(getString(R.string.remove_material));
+                        materialView.setVisibility(View.GONE);
+                        chooseMaterial.setVisibility(View.GONE);
+                        material.setVisibility(View.GONE);
+                        help2.setVisibility(View.GONE);
+                        help.setVisibility(View.GONE);
+                        textview1.setVisibility(View.GONE);
+                        textview2.setVisibility(View.GONE);
+                    }
+                    else{
+                        uploadMaterial.setText(getString(R.string.login_dialog62));
+                        materialView.setVisibility(View.VISIBLE);
+                        chooseMaterial.setVisibility(View.VISIBLE);
+                        material.setVisibility(View.VISIBLE);
+                        help.setVisibility(View.VISIBLE);
+                        help2.setVisibility(View.VISIBLE);
+                        textview1.setVisibility(View.VISIBLE);
+                        textview2.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
 
             material.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-                    chooseFile.setType("*/*");
+                    spinnerItem2 = help2.getSelectedItem().toString();
+                    chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+                    String allowtype = combination.get(spinnerItem2);
+                    chooseFile.setType(allowtype);
                     chooseFile = Intent.createChooser(chooseFile, "Choose a file");
-                    startActivityForResult(chooseFile, REQ_PDF);
+                    if (chooseFile != null){
+                        chooseMaterial.setText(getString(R.string.login_dialog65));
+                        startActivityForResult(chooseFile, REQ_PDF);
+                    }
+
                 }
             });
 
             uploadMaterial.setOnClickListener(addMaterial2 ->{
-                spinnerItem = help.getSelectedItem().toString();
-                new Connection3(this).execute();
+                if (name_material.getText().toString().isEmpty() || chooseFile == null){
+                    Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
+                }
+                else{
+                    spinnerItem = help.getSelectedItem().toString();
+                    progresBar5.setVisibility(View.VISIBLE);
+                    new Connection3(this).execute();
+                }
+
             });
 
         });
 
         return root;
     }
-    InputStream inputStream;
+
     Uri path;
-
-    private File selectedFile;
-
-    private String getPath(Context context, Uri uri) throws URISyntaxException {
-        if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = { "_data" };
-            Cursor cursor = null;
-
-            try {
-                cursor = context.getContentResolver().query(uri, projection, null, null, null);
-                int column_index = cursor.getColumnIndexOrThrow("_data");
-                if (cursor.moveToFirst()) {
-                    return cursor.getString(column_index);
-                }
-
-            } catch (Exception e) {
-
-            }
-        }
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        return null;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -404,7 +463,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
 
     }
 
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("application/pdf");
+
     public class Connection3 extends AsyncTask<Void, Void, Void> {
 
         private OnFinishListener3 listener;
@@ -423,6 +482,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
                             .addFormDataPart("file", encodedPDF)
                             .addFormDataPart("classroom_name", spinnerItem)
                             .addFormDataPart("name",name_material.getText().toString())
+                            .addFormDataPart("file_type", spinnerItem2)
                             .build();
 
                     Request request = new Request.Builder()
@@ -433,11 +493,10 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
                     Response response = client.newCall(request).execute();
                     Log.d("HTTPCALL", Integer.toString(response.code()));
                     if (Integer.toString(response.code()).equals("200")){
-
-
+                        listener.onSuccess4();
                     }
                     else if (Integer.toString(response.code()).equals("404")){
-
+                        listener.onFailed4();
                     }
 
                 } catch (IOException | JSONException e) {
@@ -462,17 +521,24 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
         protected Void doInBackground(Void... help) {
             OkHttpClient client = new OkHttpClient();
             try {
-
-                RequestBody formBody = new FormBody.Builder()
-                        .build();
-                Request request = new Request.Builder()
-                        .url("http://192.168.137.1:8000/vis/add_user/"+spinnerItem+"/"+namestudent.getText().toString()+"/"+user.getString("user_name")+"/")
-                        .post(formBody)
-                        .build();
-
+                Request request;
+                if (add_removeStudent.isChecked()){
+                    request = new Request.Builder()
+                            .url("http://192.168.137.1:8000/vis/add_user/" + spinnerItem + "/" + namestudent.getText().toString() + "/" + user.getString("user_name") + "/")
+                            .delete()
+                            .build();
+                }
+                else {
+                    RequestBody formBody = new FormBody.Builder()
+                            .build();
+                    request = new Request.Builder()
+                            .url("http://192.168.137.1:8000/vis/add_user/" + spinnerItem + "/" + namestudent.getText().toString() + "/" + user.getString("user_name") + "/")
+                            .post(formBody)
+                            .build();
+                }
                 Response response = client.newCall(request).execute();
                 Log.d("HTTPCALL", Integer.toString(response.code()));
-                if (Integer.toString(response.code()).equals("201")){
+                if (Integer.toString(response.code()).equals("201") || Integer.toString(response.code()).equals("200")){
                     listener.onSuccess3();
                 }
                 else {
@@ -532,7 +598,12 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
         getActivity().runOnUiThread(() -> {
             progresBar4.setVisibility(View.GONE);
             bottomSheetDialog.dismiss();
-            Toast.makeText(getActivity(), getString(R.string.login_dialog58), Toast.LENGTH_LONG).show();
+            if (add_removeStudent.isChecked()){
+                Toast.makeText(getActivity(), getString(R.string.login_dialog69), Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getActivity(), getString(R.string.login_dialog58), Toast.LENGTH_LONG).show();
+            }
             getActivity().recreate();
         });
     }
@@ -541,7 +612,29 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     public void onFailed3() {
         getActivity().runOnUiThread(() -> {
             progresBar4.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), getString(R.string.login_dialog59), Toast.LENGTH_LONG).show();
+            if (add_removeStudent.isChecked()){
+                Toast.makeText(getActivity(), getString(R.string.login_dialog70), Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getActivity(), getString(R.string.login_dialog59), Toast.LENGTH_LONG).show();
+            }
+            });
+    }
+
+    @Override
+    public void onSuccess4() {
+        getActivity().runOnUiThread(() -> {
+            progresBar5.setVisibility(View.GONE);
+            bottomSheetDialog2.dismiss();
+            Toast.makeText(getActivity(), getString(R.string.login_dialog66), Toast.LENGTH_LONG).show();
+        });
+    }
+
+    @Override
+    public void onFailed4() {
+        getActivity().runOnUiThread(() -> {
+            progresBar5.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), getString(R.string.login_dialog67), Toast.LENGTH_LONG).show();
         });
     }
 }

@@ -114,6 +114,18 @@
     <string name="classroom_choice">Vyberte triedu: </string>
     <string name="add_student2">Pridať študenta</string>
     <string name="login_dialog60">Nemáte vytvorený žiadnu triedu !</string>
-    <string name="login_dialog61">Pridať študenta</string>
+    <string name="login_dialog61">Pridať/Odobrať študenta</string>
     <string name="login_dialog62">Pridať material</string>
+    <string name="type_option">Typ súboru: </string>
+    <string name="name_material">Názov súboru </string>
+    <string name="login_dialog63">Výber súboru</string>
+    <string name="login_dialog64">Nevybratý súbor</string>
+    <string name="login_dialog65">Vybratý súbor</string>
+    <string name="login_dialog66">Úspešne ste pridali material !</string>
+    <string name="login_dialog67">Neúspešne ste pridali material !</string>
+    <string name="login_dialog68">Odobrať študenta</string>
+    <string name="login_dialog69">Úspešné ste odobrali študenta</string>
+    <string name="login_dialog70">Študent sa nenachádza v triede</string>
+    <string name="remove_student2">Odobrať študenta</string>
+    <string name="remove_material">Odobrať material</string>
 </resources>

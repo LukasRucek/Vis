@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.progressBar.setVisibility(View.GONE);
+
         binding.register.setOnClickListener(register ->{
             Intent intent = new Intent(this, RegistrationActivity.class);
             startActivity(intent);
