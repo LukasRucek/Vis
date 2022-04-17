@@ -61,20 +61,20 @@ public class HomeFragment extends Fragment {
                 }else{
                     if(array2.length() >= 1){
                         binding.material1.setText(getString(R.string.login_dialog31) +((JSONObject) array2.get(0)).
-                                getString("message_sender")+ "\n"+getString(R.string.login_dialog35)+((JSONObject) array2.get(0)).
-                                getString("message_name") + "\n"+getString(R.string.login_dialog33) + ((JSONObject) array2.get(0)).
+                                getString("material_sender")+ "\n"+getString(R.string.login_dialog35)+((JSONObject) array2.get(0)).
+                                getString("material_name") + "\n"+getString(R.string.login_dialog33) + ((JSONObject) array2.get(0)).
                                 getString("created_at"));
                     }
                     if(array2.length() >= 2){
                         binding.material1.setText(getString(R.string.login_dialog31) +((JSONObject) array2.get(1)).
-                                getString("message_sender")+ "\n"+getString(R.string.login_dialog35)+((JSONObject) array2.get(1)).
-                                getString("message_name") + "\n"+getString(R.string.login_dialog33) + ((JSONObject) array2.get(1)).
+                                getString("material_sender")+ "\n"+getString(R.string.login_dialog35)+((JSONObject) array2.get(1)).
+                                getString("material_name") + "\n"+getString(R.string.login_dialog33) + ((JSONObject) array2.get(1)).
                                 getString("created_at"));
                     }
                     if(array2.length() == 3) {
                         binding.material3.setText(getString(R.string.login_dialog31) + ((JSONObject) array2.get(1)).
-                                getString("message_sender") + "\n"+getString(R.string.login_dialog35) + ((JSONObject) array2.get(1)).
-                                getString("message_name") + "\n"+getString(R.string.login_dialog33) + ((JSONObject) array2.get(1)).
+                                getString("material_sender") + "\n"+getString(R.string.login_dialog35) + ((JSONObject) array2.get(1)).
+                                getString("material_name") + "\n"+getString(R.string.login_dialog33) + ((JSONObject) array2.get(1)).
                                 getString("created_at"));
                     }
                 }

@@ -94,6 +94,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     private int REQ_PDF = 21;
     private String encodedPDF;
     Button submit;
+    CheckBox remove_material;
 
     String[] allow_types = { "pdf", "txt","png", "jpeg"};
     Map<String, String> combination = new HashMap<String, String>()
@@ -226,7 +227,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
             Button material = bottomSheetDialog2.findViewById(R.id.chooseMaterial_button);
             TextView materialView = bottomSheetDialog2.findViewById(R.id.chooseMaterial);
             TextView chooseMaterial = bottomSheetDialog2.findViewById(R.id.chooseMaterial);
-            CheckBox remove_material = bottomSheetDialog2.findViewById(R.id.add_remove_material);
+            remove_material = bottomSheetDialog2.findViewById(R.id.add_remove_material);
             chooseMaterial.setText(getString(R.string.login_dialog64));
             TextView textview1 = bottomSheetDialog2.findViewById(R.id.textView8);
             TextView textview2 = bottomSheetDialog2.findViewById(R.id.textView7);
@@ -476,20 +477,27 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
         protected Void doInBackground(Void... help) {
             OkHttpClient client = new OkHttpClient();
                 try {
+                    Request request;
+                    if (remove_material.isChecked()){
+                        request = new Request.Builder()
+                                .url("http://192.168.137.1:8000/vis/delete_material/" + name_material.getText().toString())
+                                .delete()
+                                .build();
+                    }
+                    else {
+                        RequestBody body = new MultipartBody.Builder()
+                                .setType(MultipartBody.FORM)
+                                .addFormDataPart("file", encodedPDF)
+                                .addFormDataPart("classroom_name", spinnerItem)
+                                .addFormDataPart("name", name_material.getText().toString())
+                                .addFormDataPart("file_type", spinnerItem2)
+                                .build();
 
-                    RequestBody body = new MultipartBody.Builder()
-                            .setType(MultipartBody.FORM)
-                            .addFormDataPart("file", encodedPDF)
-                            .addFormDataPart("classroom_name", spinnerItem)
-                            .addFormDataPart("name",name_material.getText().toString())
-                            .addFormDataPart("file_type", spinnerItem2)
-                            .build();
-
-                    Request request = new Request.Builder()
-                            .url("http://192.168.137.1:8000/vis/materials/"+user.getString("id"))
-                            .post(body)
-                            .build();
-
+                        request = new Request.Builder()
+                                .url("http://192.168.137.1:8000/vis/materials/" + user.getString("id"))
+                                .post(body)
+                                .build();
+                    }
                     Response response = client.newCall(request).execute();
                     Log.d("HTTPCALL", Integer.toString(response.code()));
                     if (Integer.toString(response.code()).equals("200")){
@@ -624,9 +632,15 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     @Override
     public void onSuccess4() {
         getActivity().runOnUiThread(() -> {
+            if (remove_material.isChecked()){
+                Toast.makeText(getActivity(), getString(R.string.login_dialog66), Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getActivity(), getString(R.string.login_dialog66), Toast.LENGTH_LONG).show();
+            }
             progresBar5.setVisibility(View.GONE);
             bottomSheetDialog2.dismiss();
-            Toast.makeText(getActivity(), getString(R.string.login_dialog66), Toast.LENGTH_LONG).show();
+
         });
     }
 

@@ -128,4 +128,6 @@
     <string name="login_dialog70">Študent sa nenachádza v triede</string>
     <string name="remove_student2">Odobrať študenta</string>
     <string name="remove_material">Odobrať material</string>
+    <string name="login_dialog71">Odobrať material</string>
+    <string name="login_dialog72">Odobrať material</string>
 </resources>

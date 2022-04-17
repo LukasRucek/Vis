@@ -128,4 +128,6 @@
     <string name="login_dialog70">The student is not in classroom</string>
     <string name="remove_student2">Remove student</string>
     <string name="remove_material">Remove material</string>
+    <string name="login_dialog71">Odobrať material</string>
+    <string name="login_dialog72">Odobrať material</string>
 </resources>

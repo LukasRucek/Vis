@@ -109,11 +109,15 @@ public class MessageFragment extends Fragment implements OnFinishListener {
     @Override
     public void onFailed() {
         getActivity().runOnUiThread(() ->{
-            if (page == 1){
+            if (page == 1 ){
+                binding.prev.setVisibility(View.GONE);
                 binding.next.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), getString(R.string.login_dialog48), Toast.LENGTH_LONG).show();
             }
             else{
+                if (page == 2){
+                    binding.prev.setVisibility(View.GONE);
+                }
                 binding.next.setVisibility(View.GONE);
                 page -=1;
                 initData();
