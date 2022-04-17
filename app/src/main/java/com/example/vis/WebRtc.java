@@ -102,7 +102,7 @@ public class WebRtc extends AppCompatActivity implements EasyPermissions.Permiss
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_web_rtc);
         database = FirebaseDatabase.getInstance();
         surfaceView=findViewById(R.id.surface_view);
         surfaceView2=findViewById(R.id.surface_view2);
