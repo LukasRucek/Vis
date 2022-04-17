@@ -102,7 +102,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:background="@drawable/custom_button"
-        android:text="@string/login_dialog62"
+        android:text="@string/login_dialog73"
         android:textColor="@color/black" />
 
     <TextView

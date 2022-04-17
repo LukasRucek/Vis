@@ -46,10 +46,6 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
         setContentView(binding.getRoot());
         binding.progressBar.setVisibility(View.GONE);
 
-        binding.webrtc.setOnClickListener(web->{
-            Intent intent = new Intent(this, WebRtc.class);
-            startActivity(intent);
-        });
 
         binding.register.setOnClickListener(register ->{
             Intent intent = new Intent(this, RegistrationActivity.class);

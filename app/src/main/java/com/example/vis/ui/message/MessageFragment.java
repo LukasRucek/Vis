@@ -25,7 +25,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -91,7 +93,8 @@ public class MessageFragment extends Fragment implements OnFinishListener {
     private void initData() {
         for(int i = 0; i < array.length(); i++){
             try {
-                versionsList.add(new Versions(((JSONObject) array.get(i)).getString("name"), ((JSONObject) array.get(i)).getString("sender"), ((JSONObject) array.get(i)).getString("created_at"), ((JSONObject) array.get(i)).getString("text")));
+                String time = String.format("%.10s", ((JSONObject) array.get(i)).getString("created_at"));
+                versionsList.add(new Versions(getString(R.string.message_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.message_info2)+"\n"+((JSONObject) array.get(i)).getString("sender"), getString(R.string.message_info3)+"\n"+time, getString(R.string.message_info4)+"\n"+((JSONObject) array.get(i)).getString("text")));
                 adapter.notifyItemInserted(versionsList.size()-1);
             } catch (JSONException e) {
                 e.printStackTrace();

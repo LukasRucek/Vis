@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/custom_button"
         android:fontFamily="sans-serif-black"
-        android:text="@string/login_dialog36"
+        android:text="@string/login_dialog75"
         android:textAlignment="center"
         android:textColor="@android:color/holo_red_light"
         android:textLocale="center"

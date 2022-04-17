@@ -112,7 +112,7 @@
     <string name="login_dialog59">Študent neexistuje alebo už je pridaný v danej triede !</string>
     <string name="login_dialog60">Nemáte vytvorený žiadnu triedu !</string>
     <string name="login_dialog61">Pridať/Odobrať študenta</string>
-    <string name="login_dialog62">Pridať material</string>
+    <string name="login_dialog62">Pridať/Odobrať material</string>
     <string name="name_student2">Meno študenta: </string>
     <string name="classroom_option">Možnosti tried: </string>
     <string name="type_option">Typ súboru: </string>
@@ -127,8 +127,20 @@
     <string name="login_dialog70">Študent sa nenachádza v triede</string>
     <string name="remove_student2">Odobrať študenta</string>
     <string name="remove_material">Odobrať material</string>
-    <string name="login_dialog71">Odobrať material</string>
-    <string name="login_dialog72">Odobrať material</string>
+    <string name="login_dialog71">Úspešne ste odobrali material !</string>
+    <string name="login_dialog72">Material neexistuje !</string>
+    <string name="login_dialog73">Pridať material</string>
+    <string name="login_dialog74">Stiahnutie materialu</string>
+    <string name="login_dialog75">Informácie o učiteľovi</string>
+    <string name="message_info1">Názov správy:</string>
+    <string name="message_info2">Odosielateľ:</string>
+    <string name="message_info3">Čas odoslania:</string>
+    <string name="message_info4">Obsah správy:</string>
+    <string name="maretial_info1">Názov triedy:</string>
+    <string name="maretial_info2">Triedu vytvoril:</string>
+    <string name="maretial_info3">Názov predmetu:</string>
+    <string name="maretial_info4">Študenti v triede:</string>
+
     <string name="SHARED_PREFERENCES_KEY" translatable="false">VIS_PREFERENCES_KEY</string>
     <string name="SHARED_PREFERENCES_LANGUAGE_KEY" translatable="false">VIS_LANGUAGE_PREFERENCE</string>
 </resources>

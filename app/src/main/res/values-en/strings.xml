@@ -115,7 +115,7 @@
     <string name="classroom_option">Classroom options: </string>
     <string name="login_dialog60">You have not created any classes !</string>
     <string name="login_dialog61">Add/Remove student</string>
-    <string name="login_dialog62">Add material</string>
+    <string name="login_dialog62">Add/Remove material</string>
     <string name="type_option">File type: </string>
     <string name="name_material">File name </string>
     <string name="login_dialog63">Choose file</string>
@@ -128,6 +128,18 @@
     <string name="login_dialog70">The student is not in classroom</string>
     <string name="remove_student2">Remove student</string>
     <string name="remove_material">Remove material</string>
-    <string name="login_dialog71">Odobrať material</string>
-    <string name="login_dialog72">Odobrať material</string>
+    <string name="login_dialog71">You have successfully removed material !</string>
+    <string name="login_dialog72">Material does not exist !</string>
+    <string name="login_dialog73">Add material</string>
+    <string name="login_dialog74">Download material</string>
+    <string name="login_dialog75">Information about teacher</string>
+    <string name="message_info1">Message name:</string>
+    <string name="message_info2">Sender:</string>
+    <string name="message_info3">Sending time:</string>
+    <string name="message_info4">Content of the message:</string>
+    <string name="maretial_info1">Classroom name:</string>
+    <string name="maretial_info2">Classroom created:</string>
+    <string name="maretial_info3">Subject name:</string>
+    <string name="maretial_info4">Students in the classroom:</string>
+
 </resources>

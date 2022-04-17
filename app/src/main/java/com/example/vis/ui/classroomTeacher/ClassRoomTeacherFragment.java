@@ -275,7 +275,11 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
             });
 
             uploadMaterial.setOnClickListener(addMaterial2 ->{
-                if (name_material.getText().toString().isEmpty() || chooseFile == null){
+
+                if ((name_material.getText().toString().isEmpty() || chooseFile == null) && !remove_material.isChecked()){
+                    Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
+                }
+                else if (name_material.getText().toString().isEmpty() && remove_material.isChecked()){
                     Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -327,7 +331,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
                     }
                 }
 
-                materialsList.add(new TeacherMaterials(((JSONObject) array.get(i)).getString("name"), user.getString("first_name") + " " + user.getString("last_name"), ((JSONObject) array.get(i)).getString("lecture_name"),  students));
+                materialsList.add(new TeacherMaterials(getString(R.string.maretial_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.maretial_info2)+"\n"+user.getString("first_name") + " " + user.getString("last_name"), getString(R.string.maretial_info3)+"\n"+((JSONObject) array.get(i)).getString("lecture_name"),  getString(R.string.maretial_info4)+"\n"+students));
                 adapter.notifyItemInserted(materialsList.size()-1);
                 students = "";
 
@@ -339,14 +343,10 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
 
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {}
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 
     public class Connection extends AsyncTask<Void, Void, Void> {
 
@@ -503,7 +503,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
                     if (Integer.toString(response.code()).equals("200")){
                         listener.onSuccess4();
                     }
-                    else if (Integer.toString(response.code()).equals("404")){
+                    else {
                         listener.onFailed4();
                     }
 
@@ -633,7 +633,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     public void onSuccess4() {
         getActivity().runOnUiThread(() -> {
             if (remove_material.isChecked()){
-                Toast.makeText(getActivity(), getString(R.string.login_dialog66), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.login_dialog71), Toast.LENGTH_LONG).show();
             }
             else {
                 Toast.makeText(getActivity(), getString(R.string.login_dialog66), Toast.LENGTH_LONG).show();
@@ -647,8 +647,14 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     @Override
     public void onFailed4() {
         getActivity().runOnUiThread(() -> {
+            if (remove_material.isChecked()){
+                Toast.makeText(getActivity(), getString(R.string.login_dialog72), Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getActivity(), getString(R.string.login_dialog67), Toast.LENGTH_LONG).show();
+            }
             progresBar5.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), getString(R.string.login_dialog67), Toast.LENGTH_LONG).show();
+
         });
     }
 }

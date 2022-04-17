@@ -40,10 +40,12 @@
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/ic_menu_camera.xml" value="0.236" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.259" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.259" />
+        <entry key="..\:/Android/Vis/app/src/main/res/drawable/my_custom_background.xml" value="0.217" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/side_nav_bar.xml" value="0.259" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/spinner_item.xml" value="0.1065" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/styles.xml" value="0.197" />
         <entry key="..\:/Android/Vis/app/src/main/res/drawable/user_focused.xml" value="0.122" />
+        <entry key="..\:/Android/Vis/app/src/main/res/layout-v29/fragment_message.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_add_student.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Android/Vis/app/src/main/res/layout/activity_main.xml" value="0.24547101449275363" />
