@@ -144,6 +144,8 @@
     <string name="maretial_info5">Materialy v triede:</string>
     <string name="login_dialog76">Nie sú pridaný žiadny študenty !</string>
     <string name="login_dialog77">Nie sú pridané žiadné materialy !</string>
+    <string name="login_dialog78">Nie ste v žiadnej triede !</string>
+    <string name="login_dialog79">Nemáte vytvorenú žiadnu triedu !</string>
     <string name="loading">Načítanie...</string>
 
 </resources>

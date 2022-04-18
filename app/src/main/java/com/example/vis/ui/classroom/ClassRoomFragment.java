@@ -95,19 +95,24 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
 
 
         binding.cardView.setOnClickListener(expand ->{
-            classroomSpinner = binding.classroomname;
-            materialSpinner = binding.materialName;
-            help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list);
-            help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            binding.classroomname.setAdapter(help_adapter);
-            binding.classroomname.setOnItemSelectedListener(this);
-            spinnerItem2 = classroomSpinner.getSelectedItem().toString();
-            int v = (binding.classroomname.getVisibility() == View.GONE)? View.VISIBLE: View.GONE;
+            if (materialsList.isEmpty()){
+                Toast.makeText(getActivity(), getString(R.string.login_dialog78), Toast.LENGTH_LONG).show();
+            }
+            else {
+                classroomSpinner = binding.classroomname;
+                materialSpinner = binding.materialName;
+                help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list);
+                help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                binding.classroomname.setAdapter(help_adapter);
+                binding.classroomname.setOnItemSelectedListener(this);
+                spinnerItem2 = classroomSpinner.getSelectedItem().toString();
+                int v = (binding.classroomname.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
 
-            TransitionManager.beginDelayedTransition(binding.layout2, new AutoTransition());
-            binding.classroomname.setVisibility(v);
-            binding.materialName.setVisibility(v);
-            binding.downloadMaterial.setVisibility(v);
+                TransitionManager.beginDelayedTransition(binding.layout2, new AutoTransition());
+                binding.classroomname.setVisibility(v);
+                binding.materialName.setVisibility(v);
+                binding.downloadMaterial.setVisibility(v);
+            }
         });
 
         binding.downloadMaterial.setOnClickListener(download->{
@@ -302,7 +307,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
 
                         listener.onSuccess();
                     }
-                    else if (Integer.toString(response.code()).equals("404")){
+                    else if (Integer.toString(response.code()).equals("400")){
                         listener.onFailed();
                     }
 

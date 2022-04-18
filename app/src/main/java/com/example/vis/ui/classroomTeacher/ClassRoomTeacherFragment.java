@@ -139,151 +139,155 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
             binding.addClassroom.setVisibility(v);
         });
 
-        binding.addStudent.setOnClickListener(addStudent ->{
-            ArrayList<String> list = new ArrayList<>();
-            for(int i = 0 ; i < array.length();i++){
-                try {
-                    list.add(((JSONObject) array.get(i)).getString("name"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        binding.addStudent.setOnClickListener(addStudent -> {
+            if (materialsList.isEmpty()) {
+                Toast.makeText(getActivity(), getString(R.string.login_dialog79), Toast.LENGTH_LONG).show();
             }
-
-            bottomSheetDialog = new BottomSheetDialog(getActivity());
-            bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
-            submit = bottomSheetDialog.findViewById(R.id.submit);
-            namestudent = bottomSheetDialog.findViewById(R.id.student_name);
-            add_removeStudent = bottomSheetDialog.findViewById(R.id.add_delete);
-            Spinner help =bottomSheetDialog.findViewById(R.id.classrooms);
-            help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list);
-            help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            progresBar4 = bottomSheetDialog.findViewById(R.id.progressBar4);
-            progresBar4.setVisibility(View.GONE);
-            help.setAdapter(help_adapter);
-            help.setOnItemSelectedListener(this);
-            bottomSheetDialog.setCanceledOnTouchOutside(false);
-            bottomSheetDialog.show();
-            add_removeStudent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    if (add_removeStudent.isChecked()){
-                        submit.setText(getString(R.string.remove_student2));
-                    }
-                    else{
-                        submit.setText(getString(R.string.add_student2));
+            else{
+                ArrayList<String> list = new ArrayList<>();
+                for (int i = 0; i < array.length(); i++) {
+                    try {
+                        list.add(((JSONObject) array.get(i)).getString("name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
-            });
 
-            submit.setOnClickListener(addStudent1->{
-                if (namestudent.getText().toString().isEmpty()){
-                    Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
-                }
-                else{
-                    spinnerItem = help.getSelectedItem().toString();
-                    progresBar4.setVisibility(View.VISIBLE);
-                    new Connection4(this).execute();
-                }
-            });
+                bottomSheetDialog = new BottomSheetDialog(getActivity());
+                bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
+                submit = bottomSheetDialog.findViewById(R.id.submit);
+                namestudent = bottomSheetDialog.findViewById(R.id.student_name);
+                add_removeStudent = bottomSheetDialog.findViewById(R.id.add_delete);
+                Spinner help = bottomSheetDialog.findViewById(R.id.classrooms);
+                help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list);
+                help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                progresBar4 = bottomSheetDialog.findViewById(R.id.progressBar4);
+                progresBar4.setVisibility(View.GONE);
+                help.setAdapter(help_adapter);
+                help.setOnItemSelectedListener(this);
+                bottomSheetDialog.setCanceledOnTouchOutside(false);
+                bottomSheetDialog.show();
+                add_removeStudent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (add_removeStudent.isChecked()) {
+                            submit.setText(getString(R.string.remove_student2));
+                        } else {
+                            submit.setText(getString(R.string.add_student2));
+                        }
+                    }
+                });
+
+                submit.setOnClickListener(addStudent1 -> {
+                    if (namestudent.getText().toString().isEmpty()) {
+                        Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
+                    } else {
+                        spinnerItem = help.getSelectedItem().toString();
+                        progresBar4.setVisibility(View.VISIBLE);
+                        new Connection4(this).execute();
+                    }
+                });
+            }
         });
 
-        binding.addMaterial.setOnClickListener(addmaterial ->{
-            ArrayList<String> list2 = new ArrayList<>();
-            for(int i = 0 ; i < array.length();i++){
-                try {
-                    list2.add(((JSONObject) array.get(i)).getString("name"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        binding.addMaterial.setOnClickListener(addmaterial -> {
+            if (materialsList.isEmpty()) {
+                Toast.makeText(getActivity(), getString(R.string.login_dialog79), Toast.LENGTH_LONG).show();
             }
-            bottomSheetDialog2 = new BottomSheetDialog(getActivity());
-            bottomSheetDialog2.setContentView(R.layout.bottom_sheet_dialog2);
-            Button uploadMaterial = bottomSheetDialog2.findViewById(R.id.uploadMaterial);
-            Spinner help =bottomSheetDialog2.findViewById(R.id.classrooms);
-            name_material = bottomSheetDialog2.findViewById(R.id.name_material);
-            help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list2);
-            help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            Spinner help2 =bottomSheetDialog2.findViewById(R.id.type_material);
-            help_adapter2 = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, allow_types);
-            help_adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            help2.setAdapter(help_adapter2);
-            help2.setOnItemSelectedListener(this);
-
-            progresBar5 = bottomSheetDialog2.findViewById(R.id.progressBar5);
-            progresBar5.setVisibility(View.GONE);
-            help.setAdapter(help_adapter);
-            help.setOnItemSelectedListener(this);
-            bottomSheetDialog2.setCanceledOnTouchOutside(false);
-            bottomSheetDialog2.show();
-            Button material = bottomSheetDialog2.findViewById(R.id.chooseMaterial_button);
-            TextView materialView = bottomSheetDialog2.findViewById(R.id.chooseMaterial);
-            TextView chooseMaterial = bottomSheetDialog2.findViewById(R.id.chooseMaterial);
-            remove_material = bottomSheetDialog2.findViewById(R.id.add_remove_material);
-            chooseMaterial.setText(getString(R.string.login_dialog64));
-            TextView textview1 = bottomSheetDialog2.findViewById(R.id.textView8);
-            TextView textview2 = bottomSheetDialog2.findViewById(R.id.textView7);
-
-            remove_material.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (remove_material.isChecked()){
-                        uploadMaterial.setText(getString(R.string.remove_material));
-                        materialView.setVisibility(View.GONE);
-                        chooseMaterial.setVisibility(View.GONE);
-                        material.setVisibility(View.GONE);
-                        help2.setVisibility(View.GONE);
-                        help.setVisibility(View.GONE);
-                        textview1.setVisibility(View.GONE);
-                        textview2.setVisibility(View.GONE);
-                    }
-                    else{
-                        uploadMaterial.setText(getString(R.string.login_dialog62));
-                        materialView.setVisibility(View.VISIBLE);
-                        chooseMaterial.setVisibility(View.VISIBLE);
-                        material.setVisibility(View.VISIBLE);
-                        help.setVisibility(View.VISIBLE);
-                        help2.setVisibility(View.VISIBLE);
-                        textview1.setVisibility(View.VISIBLE);
-                        textview2.setVisibility(View.VISIBLE);
+            else{
+                ArrayList<String> list2 = new ArrayList<>();
+                for (int i = 0; i < array.length(); i++) {
+                    try {
+                        list2.add(((JSONObject) array.get(i)).getString("name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
-            });
+                bottomSheetDialog2 = new BottomSheetDialog(getActivity());
+                bottomSheetDialog2.setContentView(R.layout.bottom_sheet_dialog2);
+                Button uploadMaterial = bottomSheetDialog2.findViewById(R.id.uploadMaterial);
+                Spinner help = bottomSheetDialog2.findViewById(R.id.classrooms);
+                name_material = bottomSheetDialog2.findViewById(R.id.name_material);
+                help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list2);
+                help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            material.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    spinnerItem2 = help2.getSelectedItem().toString();
-                    chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-                    String allowtype = combination.get(spinnerItem2);
-                    chooseFile.setType(allowtype);
-                    chooseFile = Intent.createChooser(chooseFile, "Choose a file");
-                    if (chooseFile != null){
-                        chooseMaterial.setText(getString(R.string.login_dialog65));
-                        startActivityForResult(chooseFile, REQ_PDF);
+                Spinner help2 = bottomSheetDialog2.findViewById(R.id.type_material);
+                help_adapter2 = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, allow_types);
+                help_adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                help2.setAdapter(help_adapter2);
+                help2.setOnItemSelectedListener(this);
+
+                progresBar5 = bottomSheetDialog2.findViewById(R.id.progressBar5);
+                progresBar5.setVisibility(View.GONE);
+                help.setAdapter(help_adapter);
+                help.setOnItemSelectedListener(this);
+                bottomSheetDialog2.setCanceledOnTouchOutside(false);
+                bottomSheetDialog2.show();
+                Button material = bottomSheetDialog2.findViewById(R.id.chooseMaterial_button);
+                TextView materialView = bottomSheetDialog2.findViewById(R.id.chooseMaterial);
+                TextView chooseMaterial = bottomSheetDialog2.findViewById(R.id.chooseMaterial);
+                remove_material = bottomSheetDialog2.findViewById(R.id.add_remove_material);
+                chooseMaterial.setText(getString(R.string.login_dialog64));
+                TextView textview1 = bottomSheetDialog2.findViewById(R.id.textView8);
+                TextView textview2 = bottomSheetDialog2.findViewById(R.id.textView7);
+
+                remove_material.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (remove_material.isChecked()) {
+                            uploadMaterial.setText(getString(R.string.remove_material));
+                            materialView.setVisibility(View.GONE);
+                            chooseMaterial.setVisibility(View.GONE);
+                            material.setVisibility(View.GONE);
+                            help2.setVisibility(View.GONE);
+                            help.setVisibility(View.GONE);
+                            textview1.setVisibility(View.GONE);
+                            textview2.setVisibility(View.GONE);
+                        } else {
+                            uploadMaterial.setText(getString(R.string.login_dialog62));
+                            materialView.setVisibility(View.VISIBLE);
+                            chooseMaterial.setVisibility(View.VISIBLE);
+                            material.setVisibility(View.VISIBLE);
+                            help.setVisibility(View.VISIBLE);
+                            help2.setVisibility(View.VISIBLE);
+                            textview1.setVisibility(View.VISIBLE);
+                            textview2.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                material.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        spinnerItem2 = help2.getSelectedItem().toString();
+                        chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+                        String allowtype = combination.get(spinnerItem2);
+                        chooseFile.setType(allowtype);
+                        chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+                        if (chooseFile != null) {
+                            chooseMaterial.setText(getString(R.string.login_dialog65));
+                            startActivityForResult(chooseFile, REQ_PDF);
+                        }
+
+                    }
+                });
+
+                uploadMaterial.setOnClickListener(addMaterial2 -> {
+
+                    if ((name_material.getText().toString().isEmpty() || chooseFile == null) && !remove_material.isChecked()) {
+                        Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
+                    } else if (name_material.getText().toString().isEmpty() && remove_material.isChecked()) {
+                        Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
+                    } else {
+                        spinnerItem = help.getSelectedItem().toString();
+                        progresBar5.setVisibility(View.VISIBLE);
+                        new Connection3(this).execute();
                     }
 
-                }
-            });
-
-            uploadMaterial.setOnClickListener(addMaterial2 ->{
-
-                if ((name_material.getText().toString().isEmpty() || chooseFile == null) && !remove_material.isChecked()){
-                    Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
-                }
-                else if (name_material.getText().toString().isEmpty() && remove_material.isChecked()){
-                    Toast.makeText(getActivity(), getString(R.string.login_dialog52), Toast.LENGTH_LONG).show();
-                }
-                else{
-                    spinnerItem = help.getSelectedItem().toString();
-                    progresBar5.setVisibility(View.VISIBLE);
-                    new Connection3(this).execute();
-                }
-
-            });
-
+                });
+            }
         });
 
         return root;
@@ -494,7 +498,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
                         }
                         listener.onSuccess2();
                     }
-                    else if (Integer.toString(response.code()).equals("404")){
+                    else if (Integer.toString(response.code()).equals("400")){
                         listener.onFailed2();
                     }
 
