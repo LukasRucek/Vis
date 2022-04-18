@@ -38,6 +38,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.Material
         holder.creatorTxt.setText(materials.getCreator_materials());
         holder.createdTxt.setText(materials.getCreated_materials());
         holder.descriptionTxt.setText(materials.getDescription_materials());
+        holder.descriptionTxt2.setText(materials.getDescription_materials2());
 
 
         boolean isExpandable = materialsList.get(position).isExpandable();
@@ -52,7 +53,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.Material
     }
 
     public class MaterialsVH extends RecyclerView.ViewHolder {
-        TextView mainTxt, creatorTxt, createdTxt, descriptionTxt;
+        TextView mainTxt, creatorTxt, createdTxt, descriptionTxt, descriptionTxt2;
         LinearLayout linearLayout2;
         RelativeLayout expandableLayout;
         public MaterialsVH(View itemView) {
@@ -61,6 +62,7 @@ public class TeacherAdapter extends RecyclerView.Adapter<TeacherAdapter.Material
             creatorTxt= itemView.findViewById(R.id.creator_materials);
             createdTxt=itemView.findViewById(R.id.created_materials);
             descriptionTxt=itemView.findViewById(R.id.description_materials);
+            descriptionTxt2=itemView.findViewById(R.id.all_materials);
 
             linearLayout2 = itemView.findViewById(R.id.linear_layout_materials);
             expandableLayout= itemView.findViewById(R.id.expandable_layout_materials);

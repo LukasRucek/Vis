@@ -2,9 +2,7 @@ package com.example.vis.ui.classroomTeacher;
 
 import android.animation.LayoutTransition;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,11 +31,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.vis.OnFinishListener2;
 import com.example.vis.OnFinishListener3;
 import com.example.vis.R;
 import com.example.vis.TeacherAdapter;
-import com.example.vis.TeacherMainActivity;
 import com.example.vis.TeacherMaterials;
 import com.example.vis.databinding.FragmentTeacherclassroomBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -46,22 +43,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -82,8 +71,10 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     ProgressBar progresBar5;
     BottomSheetDialog bottomSheetDialog;
     BottomSheetDialog bottomSheetDialog2;
+    Map<String, JSONArray> list2 = new HashMap<String, JSONArray>();
     CheckBox add_removeStudent;
     JSONArray array;
+    JSONArray array2;
     JSONObject user;
     EditText namestudent;
     EditText name_material;
@@ -95,6 +86,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     private String encodedPDF;
     Button submit;
     CheckBox remove_material;
+
 
     String[] allow_types = { "pdf", "txt","png", "jpeg"};
     Map<String, String> combination = new HashMap<String, String>()
@@ -111,9 +103,11 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         binding = FragmentTeacherclassroomBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        binding.loading.setVisibility(View.VISIBLE);
         layout = binding.layout2;
         layout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
         recyclerView = binding.recyclerView2;
@@ -318,22 +312,50 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
 
     private void initData() {
         String students = "";
+        String materials = "";
         for(int i = 0; i < array.length(); i++){
             try {
                 if(student_one_class.getString(String.valueOf(i)).equals("null")){
-                    students += "Nie su pridaný žiadny študenty";
+                    students += getString(R.string.login_dialog76);
                 }
                 else{
                     JSONArray student = student_one_class.getJSONArray(String.valueOf(i));
                     for (int j = 0; j < student.length();j++){
-                        students += ((JSONObject) student.get(j)).
-                                getString("name")+", ";
+                        if(j == student.length() -1){
+                            students += ((JSONObject) student.get(j)).
+                                    getString("name")+".";
+                        }
+                        else {
+                            students += ((JSONObject) student.get(j)).
+                                    getString("name") + ", ";
+                        }
                     }
                 }
 
-                materialsList.add(new TeacherMaterials(getString(R.string.maretial_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.maretial_info2)+"\n"+user.getString("first_name") + " " + user.getString("last_name"), getString(R.string.maretial_info3)+"\n"+((JSONObject) array.get(i)).getString("lecture_name"),  getString(R.string.maretial_info4)+"\n"+students));
+
+                String nameClassroom = ((JSONObject) array.get(i)).getString("name");
+                if(list2.get(nameClassroom).length() == 0){
+                    materials += getString(R.string.login_dialog77);
+                }
+                else {
+                    for (int x = 0; x < list2.get(nameClassroom).length(); x++) {
+
+                        try {
+                            if (x == list2.get(nameClassroom).length() - 1) {
+                                materials += (list2.get(nameClassroom).getJSONObject(x).getString("name")) + ".";
+                            } else {
+                                materials += (list2.get(nameClassroom).getJSONObject(x).getString("name")) + ", ";
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                materialsList.add(new TeacherMaterials(getString(R.string.maretial_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.maretial_info2)+"\n"+user.getString("first_name") + " " + user.getString("last_name"), getString(R.string.maretial_info3)+"\n"+((JSONObject) array.get(i)).getString("lecture_name"),  getString(R.string.maretial_info4)+"\n"+students, getString(R.string.maretial_info5)+"\n"+materials));
                 adapter.notifyItemInserted(materialsList.size()-1);
                 students = "";
+                materials = "";
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -447,6 +469,27 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
 
                             } catch (IOException | JSONException e) {
                                 e.printStackTrace();
+                            }
+                            for(int j = 0; j < array.length(); j++){
+                                try {
+                                    String value3 = ((JSONObject) array.get(j)).getString("name");
+                                    Request request3 = new Request.Builder()
+                                            .url("http://192.168.137.1:8000/vis/return_classroom_materials/")
+                                            .header("name",value3)
+                                            .build();
+
+                                    Response response3 = client.newCall(request3).execute();
+                                    Log.d("HTTPCALL", Integer.toString(response3.code()));
+                                    if (Integer.toString(response3.code()).equals("200")){
+                                        final String user_info1 = response3.body().string();
+                                        JSONObject user3= new JSONObject(user_info1);
+                                        array2 = user3.getJSONArray("materials");
+                                        list2.put(value3,array2);
+                                    }
+
+                                } catch (IOException | JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                         listener.onSuccess2();
@@ -591,13 +634,17 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     public void onSuccess2() {
         getActivity().runOnUiThread(() -> {
             initData();
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            binding.loading.setVisibility(View.GONE);
         });
     }
 
     @Override
     public void onFailed2() {
         getActivity().runOnUiThread(() -> {
-        Toast.makeText(getActivity(), getString(R.string.login_dialog60), Toast.LENGTH_LONG).show();
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            binding.loading.setVisibility(View.GONE);
+            Toast.makeText(getActivity(), getString(R.string.login_dialog60), Toast.LENGTH_LONG).show();
         });
     }
 

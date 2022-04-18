@@ -141,5 +141,9 @@
     <string name="maretial_info2">Classroom created:</string>
     <string name="maretial_info3">Subject name:</string>
     <string name="maretial_info4">Students in the classroom:</string>
+    <string name="maretial_info5">Materials in the classroom:</string>
+    <string name="login_dialog76">No students have been added !</string>
+    <string name="login_dialog77">No materials added !</string>
+    <string name="loading">Loading...</string>
 
 </resources>

@@ -141,5 +141,9 @@
     <string name="maretial_info2">Triedu vytvoril:</string>
     <string name="maretial_info3">Názov predmetu:</string>
     <string name="maretial_info4">Študenti v triede:</string>
+    <string name="maretial_info5">Materialy v triede:</string>
+    <string name="login_dialog76">Nie sú pridaný žiadny študenty !</string>
+    <string name="login_dialog77">Nie sú pridané žiadné materialy !</string>
+    <string name="loading">Načítanie...</string>
 
 </resources>

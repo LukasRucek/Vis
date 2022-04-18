@@ -62,7 +62,7 @@
                     android:src="@drawable/addclassroom" />
 
                 <Spinner
-                    android:id="@+id/classroom_name"
+                    android:id="@+id/classroomname"
                     android:layout_width="154dp"
                     android:layout_height="34dp"
                     android:layout_below="@+id/materialAdd"
@@ -80,16 +80,16 @@
                     android:id="@+id/material_name"
                     android:layout_width="154dp"
                     android:layout_height="34dp"
-                    android:layout_below="@+id/classroom_name"
+                    android:layout_below="@+id/classroomname"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="10dp"
                     android:visibility="gone"
                     android:background="@android:color/transparent"
                     android:ems="10"
                     android:spinnerMode="dropdown"
                     app:layout_constraintEnd_toStartOf="@+id/downloadMaterial"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/classroom_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/classroomname" />
 
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -121,7 +121,7 @@
         android:layout_marginBottom="25dp"
         android:background="@drawable/my_custom_background"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/loading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
@@ -135,5 +135,15 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

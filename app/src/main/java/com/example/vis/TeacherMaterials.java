@@ -8,8 +8,16 @@ public class TeacherMaterials {
     private String creator_materials;
     private String created_materials;
     private String description_materials;
+    private String description_materials2;
     private boolean expandable;
 
+    public String getDescription_materials2() {
+        return description_materials2;
+    }
+
+    public void setDescription_materials2(String description_materials2) {
+        this.description_materials2 = description_materials2;
+    }
 
     @Override
     public String toString() {
@@ -18,15 +26,18 @@ public class TeacherMaterials {
                 ", creator_materials='" + creator_materials + '\'' +
                 ", created_materials='" + created_materials + '\'' +
                 ", description_materials='" + description_materials + '\'' +
+                ", description_materials2='" + description_materials2 + '\'' +
+                ", expandable=" + expandable +
                 '}';
     }
 
 
-    public TeacherMaterials(String main_materials, String creator_materials, String created_materials, String description_materials) {
+    public TeacherMaterials(String main_materials, String creator_materials, String created_materials, String description_materials, String description_materials2) {
         this.main_materials = main_materials;
         this.creator_materials = creator_materials;
         this.created_materials = created_materials;
         this.description_materials = description_materials;
+        this.description_materials2 = description_materials2;
         this.expandable = false;
     }
 
