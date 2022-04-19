@@ -63,8 +63,8 @@
 
                 <Spinner
                     android:id="@+id/classroomname"
-                    android:layout_width="154dp"
-                    android:layout_height="34dp"
+                    android:layout_width="200dp"
+                    android:layout_height="48dp"
                     android:layout_below="@+id/materialAdd"
                     android:layout_alignParentLeft="true"
                     android:visibility="gone"
@@ -78,8 +78,8 @@
 
                 <Spinner
                     android:id="@+id/material_name"
-                    android:layout_width="154dp"
-                    android:layout_height="34dp"
+                    android:layout_width="200dp"
+                    android:layout_height="48dp"
                     android:layout_below="@+id/classroomname"
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="10dp"
@@ -98,10 +98,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="25dp"
                     android:visibility="gone"
                     android:background="@drawable/custom_button"
-                    android:text="@string/button_classroom"
+                    android:text="@string/download"
                     android:textColor="#FF0000"
                     android:textStyle="bold"
 

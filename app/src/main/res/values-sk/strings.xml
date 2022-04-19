@@ -126,6 +126,7 @@
     <string name="login_dialog68">Odobrať študenta</string>
     <string name="login_dialog69">Úspešné ste odobrali študenta</string>
     <string name="login_dialog70">Študent sa nenachádza v triede</string>
+    <string name="login_dialog80">Nepodarilo sa stiahnuť súbor !</string>
     <string name="remove_student2">Odobrať študenta</string>
     <string name="remove_material">Odobrať material</string>
     <string name="login_dialog71">Úspešne ste odobrali material !</string>

@@ -3,7 +3,10 @@ package com.example.vis.ui.classroom;
 import android.Manifest;
 import android.animation.LayoutTransition;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,7 +72,17 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
     TeacherAdapter adapter;
     private ArrayAdapter help_adapter;
     private ArrayAdapter help_adapter2;
+    String open_filename;
     String spinnerItem2;
+    Map<String, String> combination = new HashMap<String, String>()
+    {
+        {
+            put("pdf", "application/pdf");
+            put("txt", "text/plain");
+            put("jpeg", "image/jpeg");
+            put("png", "image/png");
+        }
+    };
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -354,6 +368,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
                             File dir = new File(path + File.separator);
                             if (!dir.exists()) dir.mkdir();
                             File file = new File(dir + File.separator + user2.getString("name"));
+                            open_filename = user2.getString("name");
                             int permision =verifyStoragePermissions(getActivity());
                             if (permision == PackageManager.PERMISSION_GRANTED){
                                 byte[] data = Base64.decode(user2.getString("file").getBytes(), Base64.DEFAULT);
@@ -371,9 +386,10 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
                             e.printStackTrace();
                         }
 
+                        listener.onSuccess2();
                     }
-                    else if (Integer.toString(response.code()).equals("404")){
-
+                    else{
+                        listener.onFailed2();
                     }
 
                 } catch (IOException | JSONException e) {
@@ -412,11 +428,31 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
 
     @Override
     public void onSuccess2() {
-
+        getActivity().runOnUiThread(()->{
+            File path = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS + File.separator + "Vis");
+            File dir = new File(path + File.separator);
+            File file = new File(dir + File.separator + open_filename);
+            Intent target = new Intent(Intent.ACTION_VIEW);
+            Uri fileUri = FileProvider.getUriForFile(getContext(),getContext().getApplicationContext().getPackageName()+".provider",file);
+            String type = open_filename.substring(open_filename.length() - 3);
+            String allowtype = combination.get(type);
+            target.setDataAndType(fileUri,allowtype);
+            target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent intent = Intent.createChooser(target, "Open File");
+            try {
+                getActivity().startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+            }
+        });
     }
 
     @Override
     public void onFailed2() {
+        getActivity().runOnUiThread(()->{
+            Toast.makeText(getActivity(), getString(R.string.login_dialog80), Toast.LENGTH_LONG).show();
+        });
 
     }
 }

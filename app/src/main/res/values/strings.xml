@@ -132,6 +132,7 @@
     <string name="login_dialog73">Pridať material</string>
     <string name="login_dialog74">Stiahnutie materialu</string>
     <string name="login_dialog75">Informácie o učiteľovi</string>
+    <string name="login_dialog80">Nepodarilo sa stiahnuť súbor !</string>
     <string name="message_info1">Názov správy:</string>
     <string name="message_info2">Odosielateľ:</string>
     <string name="message_info3">Čas odoslania:</string>
@@ -144,6 +145,7 @@
     <string name="login_dialog76">Nie sú pridaný žiadny študenty !</string>
     <string name="login_dialog77">Nie sú pridané žiadné materialy !</string>
     <string name="loading">Načítanie...</string>
+    <string name="download">Stiahnuť</string>
     <string name="login_dialog78">Nie ste v žiadnej triede !</string>
     <string name="login_dialog79">Nemáte vytvorenú žiadnu triedu !</string>
     <string name="SHARED_PREFERENCES_KEY" translatable="false">VIS_PREFERENCES_KEY</string>
