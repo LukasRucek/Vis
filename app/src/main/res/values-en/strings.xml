@@ -70,7 +70,7 @@
     <string name="login_dialog30">You have no messages !</string>
     <string name="login_dialog31">Sender: </string>
     <string name="login_dialog32">Message name: </string>
-    <string name="login_dialog33">Sending time: </string>
+    <string name="login_dialog33">Sending date: </string>
     <string name="login_dialog34">You have no files !</string>
     <string name="login_dialog35">File name: </string>
     <string name="login_dialog36">Information about student</string>
@@ -149,5 +149,8 @@
     <string name="login_dialog80">Failed to download file !</string>
     <string name="loading">Loading...</string>
     <string name="download">Download</string>
+    <string name="login_dialog81">The classroom already exists !</string>
+    <string name="login_dialog95">You cannot send a message to yourself !</string>
+    <string name="login_dialog96">You have nothing to download !</string>
 
 </resources>

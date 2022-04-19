@@ -130,7 +130,12 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
         });
 
         binding.downloadMaterial.setOnClickListener(download->{
-            new Connection2(this).execute();
+            if(binding.materialName.getSelectedItem() == null){
+                Toast.makeText(getActivity(), getString(R.string.login_dialog96), Toast.LENGTH_LONG).show();
+            }
+            else {
+                new Connection2(this).execute();
+            }
         });
 
 
@@ -181,7 +186,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
                     }
                 }
 
-                materialsList.add(new TeacherMaterials(getString(R.string.maretial_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.maretial_info2)+"\n"+user.getString("first_name") + " " + user.getString("last_name"), getString(R.string.maretial_info3)+"\n"+((JSONObject) array.get(i)).getString("lecture_name"),  getString(R.string.maretial_info4)+"\n"+students, getString(R.string.maretial_info5)+"\n"+materials));
+                materialsList.add(new TeacherMaterials(getString(R.string.maretial_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.maretial_info2)+"\n"+((JSONObject) array.get(i)).getString("teacher"), getString(R.string.maretial_info3)+"\n"+((JSONObject) array.get(i)).getString("lecture_name"),  getString(R.string.maretial_info4)+"\n"+students, getString(R.string.maretial_info5)+"\n"+materials));
                 list.add(((JSONObject) array.get(i)).getString("name"));
                 adapter.notifyItemInserted(materialsList.size()-1);
                 students = "";

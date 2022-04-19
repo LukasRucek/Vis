@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment {
                 user = new JSONObject(value);
                 JSONArray array = user.getJSONArray("messages");
                 JSONArray array2 = user.getJSONArray("materials");
+
                 if(array.length() == 0){
                     binding.message1.setText(getString(R.string.login_dialog30));
                 }else{
@@ -63,13 +64,13 @@ public class HomeFragment extends Fragment {
                                 getString("material_name") + "\n"+getString(R.string.login_dialog33) + String.format("%.10s", ((JSONObject) array2.get(0)).getString("created_at")));
                     }
                     if(array2.length() >= 2){
-                        binding.material1.setText(getString(R.string.login_dialog31) +((JSONObject) array2.get(1)).
+                        binding.material2.setText(getString(R.string.login_dialog31) +((JSONObject) array2.get(1)).
                                 getString("material_sender")+ "\n"+getString(R.string.login_dialog35)+((JSONObject) array2.get(1)).
                                 getString("material_name") + "\n"+getString(R.string.login_dialog33) + String.format("%.10s", ((JSONObject) array2.get(1)).getString("created_at")));
                     }
                     if(array2.length() == 3) {
-                        binding.material3.setText(getString(R.string.login_dialog31) + ((JSONObject) array2.get(1)).
-                                getString("material_sender") + "\n"+getString(R.string.login_dialog35) + ((JSONObject) array2.get(1)).
+                        binding.material3.setText(getString(R.string.login_dialog31) + ((JSONObject) array2.get(2)).
+                                getString("material_sender") + "\n"+getString(R.string.login_dialog35) + ((JSONObject) array2.get(2)).
                                 getString("material_name") + "\n"+getString(R.string.login_dialog33) + String.format("%.10s", ((JSONObject) array2.get(2)).getString("created_at")));
                     }
                 }

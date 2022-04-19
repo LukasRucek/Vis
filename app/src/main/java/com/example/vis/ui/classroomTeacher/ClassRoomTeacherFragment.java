@@ -527,7 +527,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
                     Request request;
                     if (remove_material.isChecked()){
                         request = new Request.Builder()
-                                .url("http://192.168.137.1:8000/vis/delete_material/" + name_material.getText().toString())
+                                .url("http://192.168.137.1:8000/vis/delete_material/" + name_material.getText().toString()+"/"+user.getString("id"))
                                 .delete()
                                 .build();
                     }
@@ -630,7 +630,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
     @Override
     public void onFailed() {
         getActivity().runOnUiThread(() -> {
-            Toast.makeText(getActivity(), getString(R.string.login_dialog57), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.login_dialog81), Toast.LENGTH_LONG).show();
         });
     }
 
@@ -691,6 +691,7 @@ public class ClassRoomTeacherFragment extends Fragment implements OnFinishListen
             }
             progresBar5.setVisibility(View.GONE);
             bottomSheetDialog2.dismiss();
+            getActivity().recreate();
 
         });
     }

@@ -24,7 +24,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class MessageSender extends AppCompatActivity implements OnFinishListener {
+public class MessageSender extends AppCompatActivity implements OnFinishListener2 {
     private ActivityMessageSenderBinding binding;
     private String lang;
     private LanguageManager manager;
@@ -89,12 +89,30 @@ public class MessageSender extends AppCompatActivity implements OnFinishListener
         });
     }
 
+    @Override
+    public void onSuccess2() {
+
+    }
+
+    @Override
+    public void onFailed2() {
+        runOnUiThread(() ->{
+            binding.progressBar3.setVisibility(View.GONE);
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle(Html.fromHtml("<font color='#FF0000'>"+getString(R.string.login_dialog51)+"</font>"))
+                    .setMessage(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog95)+"</font>"))
+                    .setNeutralButton(Html.fromHtml("<font color='#FFFFFF'>"+getString(R.string.login_dialog3)+"</font>"),(dialogInterface, i) -> dialogInterface.dismiss())
+                    .create();
+            dialog.show();
+        });
+    }
+
 
     public class Connection extends AsyncTask<Void, Void, Void> {
 
-        private OnFinishListener listener;
+        private OnFinishListener2 listener;
 
-        public Connection(OnFinishListener listener) {
+        public Connection(OnFinishListener2 listener) {
             this.listener = listener;
         }
 
@@ -120,6 +138,9 @@ public class MessageSender extends AppCompatActivity implements OnFinishListener
                     Log.d("HTTPCALL", Integer.toString(response.code()));
                     if (Integer.toString(response.code()).equals("200")){
                         listener.onSuccess();
+                    }
+                    else if (Integer.toString(response.code()).equals("403")){
+                        listener.onFailed2();
                     }
                     else if (Integer.toString(response.code()).equals("404")){
                         listener.onFailed();

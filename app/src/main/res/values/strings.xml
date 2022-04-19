@@ -69,7 +69,7 @@
     <string name="login_dialog30">Nemáte žiadné správy !</string>
     <string name="login_dialog31">Odosielateľ: </string>
     <string name="login_dialog32">Názov správy: </string>
-    <string name="login_dialog33">Čas odoslania: </string>
+    <string name="login_dialog33">Dátum odoslania: </string>
     <string name="login_dialog34">Nemáte žiadné súbory !</string>
     <string name="login_dialog35">Názov súboru: </string>
     <string name="login_dialog36">Informácie o študentovi </string>
@@ -146,8 +146,11 @@
     <string name="login_dialog77">Nie sú pridané žiadné materialy !</string>
     <string name="loading">Načítanie...</string>
     <string name="download">Stiahnuť</string>
+    <string name="login_dialog81">Trieda už existuje !</string>
     <string name="login_dialog78">Nie ste v žiadnej triede !</string>
     <string name="login_dialog79">Nemáte vytvorenú žiadnu triedu !</string>
+    <string name="login_dialog95">Nemôžete poslať správu sám sebe !</string>
+    <string name="login_dialog96">Nemáte čo stiahnuť !</string>
     <string name="SHARED_PREFERENCES_KEY" translatable="false">VIS_PREFERENCES_KEY</string>
     <string name="SHARED_PREFERENCES_LANGUAGE_KEY" translatable="false">VIS_LANGUAGE_PREFERENCE</string>
 </resources>
