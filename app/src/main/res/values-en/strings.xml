@@ -152,5 +152,6 @@
     <string name="login_dialog81">The classroom already exists !</string>
     <string name="login_dialog95">You cannot send a message to yourself !</string>
     <string name="login_dialog96">You have nothing to download !</string>
+    <string name="login_dialog97">You do not have internet connection !</string>
 
 </resources>

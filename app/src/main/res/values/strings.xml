@@ -151,6 +151,7 @@
     <string name="login_dialog79">Nemáte vytvorenú žiadnu triedu !</string>
     <string name="login_dialog95">Nemôžete poslať správu sám sebe !</string>
     <string name="login_dialog96">Nemáte čo stiahnuť !</string>
+    <string name="login_dialog97">Nemáte pripojenie na internet !</string>
     <string name="SHARED_PREFERENCES_KEY" translatable="false">VIS_PREFERENCES_KEY</string>
     <string name="SHARED_PREFERENCES_LANGUAGE_KEY" translatable="false">VIS_LANGUAGE_PREFERENCE</string>
 </resources>

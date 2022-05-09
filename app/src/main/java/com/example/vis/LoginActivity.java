@@ -18,7 +18,9 @@ import com.example.vis.databinding.ActivityLoginBinding;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import okhttp3.FormBody;
@@ -45,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.progressBar.setVisibility(View.GONE);
-
 
         binding.register.setOnClickListener(register ->{
             Intent intent = new Intent(this, RegistrationActivity.class);
@@ -97,6 +98,7 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
                     String pass2 = pass.getString("password");
                     final BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(),pass2);
                     if(result.verified){
+
                         listener.onSuccess_login();
                         Request request2 = new Request.Builder()
                                 .url("http://192.168.137.1:8000/vis/login/")
@@ -141,6 +143,10 @@ public class LoginActivity extends AppCompatActivity implements OnFinishLoginLis
     @Override
     public void onSuccess_login() {
         runOnUiThread(() -> {
+            File dbFile = getApplicationContext().getDatabasePath("MyDatabase.db");
+            if(dbFile.exists()){
+                dbFile.delete();
+            }
             binding.progressBar.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(),getString(R.string.login_dialog27), Toast.LENGTH_SHORT).show();
         });

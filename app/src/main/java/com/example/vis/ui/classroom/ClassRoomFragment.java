@@ -4,8 +4,10 @@ import android.Manifest;
 import android.animation.LayoutTransition;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +33,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.vis.ClassroomModel;
+import com.example.vis.DBHelper;
+import com.example.vis.DBHelperClass;
+import com.example.vis.ListAdapter;
+import com.example.vis.ListAdapterClass;
+import com.example.vis.MessageModel;
 import com.example.vis.OnFinishListener2;
 import com.example.vis.R;
 import com.example.vis.TeacherAdapter;
@@ -49,6 +57,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SimpleTimeZone;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -74,6 +83,9 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
     private ArrayAdapter help_adapter2;
     String open_filename;
     String spinnerItem2;
+
+    boolean status;
+    DBHelperClass db;
     Map<String, String> combination = new HashMap<String, String>()
     {
         {
@@ -83,6 +95,12 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
             put("png", "image/png");
         }
     };
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -101,6 +119,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        db = new DBHelperClass(getActivity());
         new Connection(this).execute();
         recyclerView = binding.recyclerViewClassroom;
         adapter = new TeacherAdapter(materialsList);
@@ -142,6 +161,17 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
         return root;
     }
 
+
+    private void initDataOffline(){
+        ArrayList<ClassroomModel> msgModel = db.getClassrooms();
+        ListAdapterClass la = new ListAdapterClass(msgModel, getActivity());
+
+        for(int i = 0; i < msgModel.size(); i++){
+            ClassroomModel classroom = (ClassroomModel) la.getItem(i);
+            materialsList.add(new TeacherMaterials(getString(R.string.maretial_info1)+" "+classroom.getName(), getString(R.string.maretial_info2)+"\n"+classroom.getOwner(), getString(R.string.maretial_info3)+"\n"+classroom.getSubject(),  getString(R.string.maretial_info4)+"\n"+classroom.getStudents(), getString(R.string.maretial_info5)+"\n"+classroom.getMaterials()));
+            adapter.notifyItemInserted(materialsList.size()-1);
+        }
+    }
 
 
     private void initData() {
@@ -189,6 +219,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
                 materialsList.add(new TeacherMaterials(getString(R.string.maretial_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.maretial_info2)+"\n"+((JSONObject) array.get(i)).getString("teacher"), getString(R.string.maretial_info3)+"\n"+((JSONObject) array.get(i)).getString("lecture_name"),  getString(R.string.maretial_info4)+"\n"+students, getString(R.string.maretial_info5)+"\n"+materials));
                 list.add(((JSONObject) array.get(i)).getString("name"));
                 adapter.notifyItemInserted(materialsList.size()-1);
+                //db.insertData(((JSONObject) array.get(i)).getString("name"),((JSONObject) array.get(i)).getString("lecture_name"),((JSONObject) array.get(i)).getString("teacher"),students,materials);
                 students = "";
                 materials = "";
 
@@ -257,84 +288,88 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            OkHttpClient client = new OkHttpClient();
-            Bundle extras = getActivity().getIntent().getExtras();
-            if (extras != null) {
-                String value = extras.getString("key");
-                JSONObject user;
-                try {
-                    user = new JSONObject(value);
+            if(isNetworkConnected()){
+                OkHttpClient client = new OkHttpClient();
+                Bundle extras = getActivity().getIntent().getExtras();
+                if (extras != null) {
+                    String value = extras.getString("key");
+                    JSONObject user;
+                    try {
+                        user = new JSONObject(value);
 
-                    Request request = new Request.Builder()
-                            .url("http://192.168.137.1:8000/vis/return_all_classrooms/")
-                            .header("id",user.getString("id"))
-                            .build();
+                        Request request = new Request.Builder()
+                                .url("http://192.168.137.1:8000/vis/return_all_classrooms/")
+                                .header("id",user.getString("id"))
+                                .build();
 
-                    Response response = client.newCall(request).execute();
-                    Log.d("HTTPCALL", Integer.toString(response.code()));
-                    if (Integer.toString(response.code()).equals("200")){
-                        final String user_info = response.body().string();
-                        JSONObject user2 = new JSONObject(user_info);
-                        array = user2.getJSONArray("classrooms");
-                        for(int i = 0; i < array.length(); i++) {
-                            try {
+                        Response response = client.newCall(request).execute();
+                        Log.d("HTTPCALL", Integer.toString(response.code()));
+                        if (Integer.toString(response.code()).equals("200")){
+                            final String user_info = response.body().string();
+                            JSONObject user2 = new JSONObject(user_info);
+                            array = user2.getJSONArray("classrooms");
+                            for(int i = 0; i < array.length(); i++) {
+                                try {
 
-                                String value2 = ((JSONObject) array.get(i)).getString("name");
-                                Request request2 = new Request.Builder()
-                                        .url("http://192.168.137.1:8000/vis/users/" + value2)
-                                        .build();
+                                    String value2 = ((JSONObject) array.get(i)).getString("name");
+                                    Request request2 = new Request.Builder()
+                                            .url("http://192.168.137.1:8000/vis/users/" + value2)
+                                            .build();
 
-                                Response response2 = client.newCall(request2).execute();
-                                Log.d("HTTPCALL", Integer.toString(response2.code()));
-                                if (Integer.toString(response2.code()).equals("200")) {
-                                    final String help2 = response2.body().string();
-                                    JSONObject array2 = new JSONObject(help2);
-                                    JSONArray array3 = array2.getJSONArray("users");
-                                    if(array3.length() == 0){
-                                        student_one_class.put(String.valueOf(i),"null");
+                                    Response response2 = client.newCall(request2).execute();
+                                    Log.d("HTTPCALL", Integer.toString(response2.code()));
+                                    if (Integer.toString(response2.code()).equals("200")) {
+                                        final String help2 = response2.body().string();
+                                        JSONObject array2 = new JSONObject(help2);
+                                        JSONArray array3 = array2.getJSONArray("users");
+                                        if(array3.length() == 0){
+                                            student_one_class.put(String.valueOf(i),"null");
+                                        }
+                                        else{
+                                            student_one_class.put(String.valueOf(i),array3);
+                                        }
                                     }
-                                    else{
-                                        student_one_class.put(String.valueOf(i),array3);
+
+                                } catch (IOException | JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            for(int j = 0; j < array.length(); j++){
+                                try {
+                                    String value3 = ((JSONObject) array.get(j)).getString("name");
+                                    Request request3 = new Request.Builder()
+                                            .url("http://192.168.137.1:8000/vis/return_classroom_materials/")
+                                            .header("name",value3)
+                                            .build();
+
+                                    Response response3 = client.newCall(request3).execute();
+                                    Log.d("HTTPCALL", Integer.toString(response3.code()));
+                                    if (Integer.toString(response3.code()).equals("200")){
+                                        final String user_info1 = response3.body().string();
+                                        JSONObject user3= new JSONObject(user_info1);
+                                        array2 = user3.getJSONArray("materials");
+                                        list2.put(value3,array2);
                                     }
-                                }
 
-                            } catch (IOException | JSONException e) {
-                                e.printStackTrace();
+                                } catch (IOException | JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
+                            status = true;
+                            listener.onSuccess();
                         }
-                        for(int j = 0; j < array.length(); j++){
-                            try {
-                                String value3 = ((JSONObject) array.get(j)).getString("name");
-                                Request request3 = new Request.Builder()
-                                        .url("http://192.168.137.1:8000/vis/return_classroom_materials/")
-                                        .header("name",value3)
-                                        .build();
-
-                                Response response3 = client.newCall(request3).execute();
-                                Log.d("HTTPCALL", Integer.toString(response3.code()));
-                                if (Integer.toString(response3.code()).equals("200")){
-                                    final String user_info1 = response3.body().string();
-                                    JSONObject user3= new JSONObject(user_info1);
-                                    array2 = user3.getJSONArray("materials");
-                                    list2.put(value3,array2);
-                                }
-
-                            } catch (IOException | JSONException e) {
-                                e.printStackTrace();
-                            }
+                        else if (Integer.toString(response.code()).equals("400")){
+                            listener.onFailed();
                         }
 
-                        listener.onSuccess();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
                     }
-                    else if (Integer.toString(response.code()).equals("400")){
-                        listener.onFailed();
-                    }
-
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
                 }
+            }else{
+                status = false;
+                listener.onSuccess();
             }
-
             return null;
         }
 
@@ -416,7 +451,13 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
     @Override
     public void onSuccess() {
         getActivity().runOnUiThread(() -> {
-            initData();
+            if(status){
+                initData();
+            }else{
+                Toast.makeText(getActivity(), getString(R.string.login_dialog97), Toast.LENGTH_LONG).show();
+                initDataOffline();
+            }
+
             binding.loading.setVisibility(View.GONE);
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         });

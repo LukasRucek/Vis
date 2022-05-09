@@ -152,5 +152,6 @@
     <string name="login_dialog81">Trieda už existuje !</string>
     <string name="login_dialog95">Nemôžete poslať správu sám sebe !</string>
     <string name="login_dialog96">Nemáte čo stiahnuť !</string>
+    <string name="login_dialog97">Nemáte pripojenie na internet !</string>
 
 </resources>
