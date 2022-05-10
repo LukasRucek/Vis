@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class DBHelperClass extends SQLiteOpenHelper {
-    public static final String DBName = "MyDatabase.db";
+    public static final String DBName = "MyDatabase2.db";
 
     public static final String TableName = "Classroom";
     public static final String Name = "name";
@@ -40,15 +40,15 @@ public class DBHelperClass extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public boolean insertData(String name, String subject, String owner, String students, String materials){
         SQLiteDatabase db = this.getWritableDatabase();
-        /*
-        Cursor crs = db.rawQuery("SELECT EXISTS(SELECT 1 FROM Message WHERE sender=? AND time=? AND ctx=?) as isIn",
-                new String[] {sender, time, ctx});
+
+        Cursor crs = db.rawQuery("SELECT EXISTS(SELECT 1 FROM Classroom WHERE name=? AND subject=? AND owner=? AND students=? AND materials=?) as isIn",
+                new String[] {name, subject, owner, students, materials});
 
         crs.moveToFirst();
         if(Integer.parseInt(crs.getString(crs.getColumnIndex("isIn"))) == 1){
             return true;
         }
-        */
+
 
         ContentValues cv = new ContentValues();
         cv.put(Name, name);

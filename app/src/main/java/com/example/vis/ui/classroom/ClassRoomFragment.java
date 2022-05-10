@@ -85,7 +85,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
     String spinnerItem2;
 
     boolean status;
-    DBHelperClass db;
+    DBHelper db;
     Map<String, String> combination = new HashMap<String, String>()
     {
         {
@@ -119,7 +119,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        db = new DBHelperClass(getActivity());
+        db = new DBHelper(getActivity());
         new Connection(this).execute();
         recyclerView = binding.recyclerViewClassroom;
         adapter = new TeacherAdapter(materialsList);
@@ -128,23 +128,26 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
 
 
         binding.cardView.setOnClickListener(expand ->{
-            if (materialsList.isEmpty()){
-                Toast.makeText(getActivity(), getString(R.string.login_dialog78), Toast.LENGTH_LONG).show();
-            }
-            else {
-                classroomSpinner = binding.classroomname;
-                materialSpinner = binding.materialName;
-                help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list);
-                help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                binding.classroomname.setAdapter(help_adapter);
-                binding.classroomname.setOnItemSelectedListener(this);
-                spinnerItem2 = classroomSpinner.getSelectedItem().toString();
-                int v = (binding.classroomname.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
+            if(isNetworkConnected()) {
+                if (materialsList.isEmpty()) {
+                    Toast.makeText(getActivity(), getString(R.string.login_dialog78), Toast.LENGTH_LONG).show();
+                } else {
+                    classroomSpinner = binding.classroomname;
+                    materialSpinner = binding.materialName;
+                    help_adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, list);
+                    help_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    binding.classroomname.setAdapter(help_adapter);
+                    binding.classroomname.setOnItemSelectedListener(this);
+                    spinnerItem2 = classroomSpinner.getSelectedItem().toString();
+                    int v = (binding.classroomname.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
 
-                TransitionManager.beginDelayedTransition(binding.layout2, new AutoTransition());
-                binding.classroomname.setVisibility(v);
-                binding.materialName.setVisibility(v);
-                binding.downloadMaterial.setVisibility(v);
+                    TransitionManager.beginDelayedTransition(binding.layout2, new AutoTransition());
+                    binding.classroomname.setVisibility(v);
+                    binding.materialName.setVisibility(v);
+                    binding.downloadMaterial.setVisibility(v);
+                }
+            }else{
+                Toast.makeText(getActivity(), getString(R.string.login_dialog97), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -219,7 +222,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
                 materialsList.add(new TeacherMaterials(getString(R.string.maretial_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.maretial_info2)+"\n"+((JSONObject) array.get(i)).getString("teacher"), getString(R.string.maretial_info3)+"\n"+((JSONObject) array.get(i)).getString("lecture_name"),  getString(R.string.maretial_info4)+"\n"+students, getString(R.string.maretial_info5)+"\n"+materials));
                 list.add(((JSONObject) array.get(i)).getString("name"));
                 adapter.notifyItemInserted(materialsList.size()-1);
-                //db.insertData(((JSONObject) array.get(i)).getString("name"),((JSONObject) array.get(i)).getString("lecture_name"),((JSONObject) array.get(i)).getString("teacher"),students,materials);
+                db.insertDataClassroom(((JSONObject) array.get(i)).getString("name"),((JSONObject) array.get(i)).getString("lecture_name"),((JSONObject) array.get(i)).getString("teacher"),students,materials);
                 students = "";
                 materials = "";
 
@@ -387,9 +390,7 @@ public class ClassRoomFragment extends Fragment implements OnFinishListener2, Ad
         @Override
         protected Void doInBackground(Void... arg0) {
             OkHttpClient client = new OkHttpClient();
-
                 try {
-
                     Request request = new Request.Builder()
                             .url("http://192.168.137.1:8000/vis/return_material")
                             .header("classname",classroomSpinner.getSelectedItem().toString())

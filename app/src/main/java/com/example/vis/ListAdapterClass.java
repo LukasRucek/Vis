@@ -23,7 +23,7 @@ public class ListAdapterClass extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return list.get(i);
     }
 
     @Override

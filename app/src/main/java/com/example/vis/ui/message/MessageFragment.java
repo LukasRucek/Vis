@@ -68,7 +68,6 @@ public class MessageFragment extends Fragment implements OnFinishListener {
         recyclerView = binding.recyclerView;
         prev_off = binding.prev;
         next_off = binding.next;
-        System.out.println("Pridavanie do DB");
         db = new DBHelper(getActivity());
         new Connection(this).execute();
         adapter = new VersionsAdapter(versionsList);
@@ -100,13 +99,17 @@ public class MessageFragment extends Fragment implements OnFinishListener {
         });
 
         binding.newMessage.setOnClickListener(newMessage ->{
-            Intent intent = new Intent(getActivity(), MessageSender.class);
-            try {
-                intent.putExtra("id",user.getString("id"));
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if(isNetworkConnected()) {
+                Intent intent = new Intent(getActivity(), MessageSender.class);
+                try {
+                    intent.putExtra("id", user.getString("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                startActivity(intent);
+            }else{
+                Toast.makeText(getActivity(), getString(R.string.login_dialog97), Toast.LENGTH_LONG).show();
             }
-            startActivity(intent);
         });
         return root;
     }
@@ -118,7 +121,7 @@ public class MessageFragment extends Fragment implements OnFinishListener {
                 String time = String.format("%.10s", ((JSONObject) array.get(i)).getString("created_at"));
                 versionsList.add(new Versions(getString(R.string.message_info1)+" "+((JSONObject) array.get(i)).getString("name"), getString(R.string.message_info2)+"\n"+((JSONObject) array.get(i)).getString("sender"), getString(R.string.message_info3)+"\n"+time, getString(R.string.message_info4)+"\n"+((JSONObject) array.get(i)).getString("text")));
                 adapter.notifyItemInserted(versionsList.size()-1);
-                db.insertData(page,((JSONObject) array.get(i)).getString("name"),((JSONObject) array.get(i)).getString("sender"),((JSONObject) array.get(i)).getString("created_at"),((JSONObject) array.get(i)).getString("text"));
+                db.insertDataMessage(page,((JSONObject) array.get(i)).getString("name"),((JSONObject) array.get(i)).getString("sender"),((JSONObject) array.get(i)).getString("created_at"),((JSONObject) array.get(i)).getString("text"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -127,6 +130,7 @@ public class MessageFragment extends Fragment implements OnFinishListener {
 
 
     private void initDataOffline(){
+
         ArrayList<MessageModel> msgModel = db.getPage();
         ListAdapter la = new ListAdapter(msgModel, getActivity());
 
@@ -138,13 +142,16 @@ public class MessageFragment extends Fragment implements OnFinishListener {
                 adapter.notifyItemInserted(versionsList.size()-1);
             }
         }
-        MessageModel msg = (MessageModel) la.getItem(msgModel.size() - 1);
         if(msgModel.size() == 0){
             next_off.setVisibility(View.GONE);
         }
-        if(msg.getPage().equals(String.valueOf(page))){
-            next_off.setVisibility(View.GONE);
+        else{
+            MessageModel msg = (MessageModel) la.getItem(msgModel.size() - 1);
+            if(msg.getPage().equals(String.valueOf(page))){
+                next_off.setVisibility(View.GONE);
+            }
         }
+
     }
 
     @Override
